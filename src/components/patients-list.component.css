@@ -1,0 +1,32 @@
+.paging {
+  background-color: #f1f1f1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  /*align-items: center;*/
+  align-content: center;
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px;
+}
+
+.paging > div {
+  /*background-color: darkgrey;*/
+  width: 100%;
+  /*margin: 10px;*/
+  text-align: center;
+}
+
+.bbb {
+  display: flex;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+.badgePatient {
+  margin-top: 20px;
+}
+.selectText {
+  margin-right: 10px;
+}
