@@ -6,6 +6,8 @@ import './patients-list.component.css';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Dropdown from 'react-bootstrap/Dropdown'
+import AppointmentDataService from "../services/appointment.service";
+
 
 export default class PatientsList extends Component {
   constructor(props) {
@@ -15,6 +17,8 @@ export default class PatientsList extends Component {
     this.handlePageChange = this.handlePageChange.bind(this);
     this.handlePageSizeChange = this.handlePageSizeChange.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
+    this.addAppointment = this.addAppointment.bind(this);
+    this.makeAppointment = this.makeAppointment.bind(this);
 
     this.state = {
       patients: [],
@@ -29,6 +33,7 @@ export default class PatientsList extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props.match.params.id);
     this.retrievePatients();
   }
 
@@ -122,6 +127,49 @@ export default class PatientsList extends Component {
     this.setState({patients});
   }
 
+  makeAppointment(e){
+    console.log(this.props.match.params.id);
+
+    console.log(this.props.history.push('/appointments/'));
+    console.log('--------------------------------------------------');
+    var res = this.props.match.params.id.split("_");
+    console.log(res);
+    console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
+    console.log(e.target.getAttribute('patientid'));
+  }
+
+  addAppointment(e) {
+
+    let hour_date_selectedDate = this.props.match.params.id.split("_");
+
+    var data = {
+      madeBy: e.target.getAttribute('patientid'),
+      hour: hour_date_selectedDate[0],
+      date: hour_date_selectedDate[1],
+      service: e.target.getAttribute('serviceid'),
+      estate: "pending",
+    };
+
+    AppointmentDataService.create(data)
+      .then((response) => {
+
+        this.props.history.push('/appointments/after/' + hour_date_selectedDate[2])
+        // console.log(response.data);
+        // this.setState(state => {
+        //   const appointments = state.appointments.concat(response.data);
+
+        //   return {
+        //     appointments,
+        //   };
+
+        // });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+  }
+
   render() {
 
     const {
@@ -167,7 +215,7 @@ export default class PatientsList extends Component {
                      id={`heading${index}`}>
 
                   <div className="row">
-                    <div className="col-8">
+                    <div className="col-6 col-md-8" style={{ paddingLeft: '0px'}}>
                       <h5 className="mb-0">
                         <button className={"btn btn-link" + (patient.expanded ? "" : " collapsed")}
                                 data-toggle="collapse"
@@ -175,31 +223,42 @@ export default class PatientsList extends Component {
                                 aria-expanded={(patient.expanded ? "true" : "false")}
                                 aria-controls={`collapse${index}`}
                                 inx={index}
-                                onClick={ this.toggleMenu }>
+                                onClick={ this.toggleMenu }
+                                >
                           {patient.surname},&nbsp; {patient.name}
                         </button>
                       </h5>
                     </div>
-                    <div className="col-4">
+                    <div className="col-6 col-md-4">
 
-                      <Dropdown as={ButtonGroup}>
-                        <Button variant="secondary" href={"/addappointment/" + patient.id}>Citar</Button>
+                      { this.props.match.params.id ?
+                        <Dropdown as={ButtonGroup}>
+                          <Button variant="secondary" patientid={patient.id} serviceid="Acupuntura" onClick={this.addAppointment}>Acupuntura</Button>
+                          <Dropdown.Toggle split variant="secondary" id="dropdown-split-basic" />
 
-                        <Dropdown.Toggle split variant="secondary" id="dropdown-split-basic" />
+                          <Dropdown.Menu>
+                            <Dropdown.Item patientid={patient.id} serviceid="Psicología" onClick={this.addAppointment}>Psicología</Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                        :
+                        <Dropdown as={ButtonGroup}>
+                          <Button variant="secondary" href={"/addappointment/" + patient.id}>Citar</Button>
 
-                        <Dropdown.Menu>
-                          <Dropdown.Item href={"/appointments/patient/" + patient.id}>Citas</Dropdown.Item>
-                          <Dropdown.Item href={"/patients/" + patient.id + "/obs"}>Historia</Dropdown.Item>
-                          <Dropdown.Divider />
-                          <Dropdown.Item href={"/addinvoice/" + patient.id}>Nueva factura</Dropdown.Item>
-                          <Dropdown.Item href={"/invoices/patient/" + patient.id}>Facturas</Dropdown.Item>
-                          <Dropdown.Divider />
-                          <Dropdown.Item href={"/patients/" + patient.id}>Editar</Dropdown.Item>
-                        </Dropdown.Menu>
-                      </Dropdown>
+                          <Dropdown.Toggle split variant="secondary" id="dropdown-split-basic" />
 
+                          <Dropdown.Menu>
+                            <Dropdown.Item href={"/appointments/patient/" + patient.id}>Citas</Dropdown.Item>
+                            <Dropdown.Item href={"/patients/" + patient.id + "/obs"}>Historia</Dropdown.Item>
+                            <Dropdown.Divider />
+                            <Dropdown.Item href={"/addinvoice/" + patient.id}>Nueva factura</Dropdown.Item>
+                            <Dropdown.Item href={"/invoices/patient/" + patient.id}>Facturas</Dropdown.Item>
+                            <Dropdown.Divider />
+                            <Dropdown.Item href={"/patients/" + patient.id}>Editar</Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+
+                      }
                       {/* comment */}
-
                     </div>
                   </div>
 

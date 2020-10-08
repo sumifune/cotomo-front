@@ -53,7 +53,7 @@ export default class AddAppointment extends Component {
 
     AppointmentDataService.findByDate(selectedDate.format('DD/MM/YYYY'))
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         const { appointments } = response.data;
 
         this.setState({
@@ -66,9 +66,7 @@ export default class AddAppointment extends Component {
   }
 
   handleDateChange(date) {
-    console.log('------------------------------------------------');
-    console.log(date);
-    console.log('------------------------------------------------');
+    // console.log(date);
 
     this.setState({
       selectedDate: date,
@@ -110,17 +108,16 @@ export default class AddAppointment extends Component {
       hour: e.target.getAttribute('inx'),
       date: this.state.selectedDate.format('DD-MM-YYYY'),
       service: this.state.service,
-      estate: "pending",
       madeBy: this.props.match.params.id
     };
 
 
-    console.log(data);
+    // console.log(data);
 
     AppointmentDataService.create(data)
       .then((response) => {
 
-        console.log(response.data);
+        // console.log(response.data);
         this.setState(state => {
           const appointments = state.appointments.concat(response.data);
 
@@ -137,7 +134,7 @@ export default class AddAppointment extends Component {
   }
 
   setService(e) {
-    console.log(e.target.getAttribute('service'));
+    // console.log(e.target.getAttribute('service'));
     this.setState({
       service: e.target.getAttribute('service'),
     });
@@ -249,7 +246,7 @@ export default class AddAppointment extends Component {
                         <strong className="mr-auto">{appointment.service}</strong>
                         <small>{moment(appointment.createdAt).fromNow()}</small>
                       </Toast.Header>
-                      <Toast.Body>{appointment.madeBy.surname}, {appointment.madeBy.surname}</Toast.Body>
+                      <Toast.Body>{appointment.madeBy.surname}, {appointment.madeBy.name}</Toast.Body>
                     </Toast>
                   :
                     ""

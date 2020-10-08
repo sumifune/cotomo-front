@@ -84,6 +84,11 @@ class App extends Component {
                 path={["/", "/patients"]}
                 component={PatientsList}
               />
+              <Route
+                exact
+                path={["/", "/patients/appoint/:id"]}
+                component={PatientsList}
+              />
               <Route exact path="/add" component={AddPatient} />
               <Route exact path="/patients/:id" component={Patient} />
               <Route exact path="/patients/:id/obs" component={ObservationsList} />
@@ -91,6 +96,11 @@ class App extends Component {
               <Route
                 exact
                 path={["/", "/appointments"]}
+                component={AppointmentsList}
+              />
+              <Route
+                exact
+                path={["/", "/appointments/after/:selected"]}
                 component={AppointmentsList}
               />
               <Route exact path="/addappointment/:id" component={AddAppointment} />
