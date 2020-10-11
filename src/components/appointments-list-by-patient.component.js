@@ -14,7 +14,7 @@ export default class AddAppointment extends Component {
     this.retrieveAppointments = this.retrieveAppointments.bind(this);
     this.setFilter = this.setFilter.bind(this);
     this.cancelAppointment = this.cancelAppointment.bind(this);
-    this.passAppointment = this.passAppointment.bind(this);
+    this.fulfillAppointment = this.fulfillAppointment.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleShowModal = this.handleShowModal.bind(this);
     this.handleState = this.handleState.bind(this);
@@ -32,6 +32,7 @@ export default class AddAppointment extends Component {
 
   componentDidMount() {
     // console.log(moment("01-01-2020", "DD-MM-YYYY").format('DD-MM-YYYY'));
+    console.log('kkkkkkkkkkkkkkk');
     this.retrieveAppointments();
   }
   componentDidUpdate(prevProps, prevState) {
@@ -78,7 +79,7 @@ export default class AddAppointment extends Component {
     AppointmentDataService.update(id, data)
       .then((response) => {
 
-        // console.log(response.data);
+        console.log(response.data);
         this.setState(state => {
 
         	// console.log(response.data);
@@ -106,24 +107,25 @@ export default class AddAppointment extends Component {
 
   }
 
-  passAppointment(e) {
+  fulfillAppointment(e) {
 
     const id = e.target.getAttribute('aid');
     const arrIndx = e.target.getAttribute('arrindx');
 
     const data = {
-      estate: "passed",
+      estate: "fulfilled",
     };
 
     AppointmentDataService.update(id, data)
       .then((response) => {
 
-        // console.log(response.data);
+        console.log(response.data);
         this.setState(state => {
 
           let appointments = [...state.appointments];
           appointments[arrIndx] = response.data;
 
+          console.log(appointments);
           return {
             appointments,
           };
@@ -173,25 +175,27 @@ export default class AddAppointment extends Component {
       <>
       <div className="row">
         <div className="col-md-12">
+
           { appointments && appointments.filter(appointment => filter === 'all' ? true : appointment.estate === filter).map((appointment, index) => {
 
-            return <Card style={{ marginBottom: '10px'/*width: '18rem'*/ }} key={index}>
+            return <Card style={{ marginBottom: '10px', marginTop: '10px' }} key={index}>
               <Card.Body>
                 <Card.Title>{appointment.service}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
-                	{moment(appointment.date).format("DD-MM-YYYY")}
-                	&nbsp;a las {appointment.hour}
-                	</Card.Subtitle>
+                  {moment(appointment.date).format("DD-MM-YYYY")}
+                  &nbsp;a las {appointment.hour}
+                  </Card.Subtitle>
                 <Card.Text>
-                	{/*{this.props.match.params.id}*/}
-                	{appointment.madeBy.name}&nbsp;{appointment.madeBy.surname}<br/>
-                	<small>creada {moment(appointment.createdAt).fromNow()}</small><br/>
+                  {/*{this.props.match.params.id}*/}
+                  {appointment.madeBy.name}&nbsp;{appointment.madeBy.surname}<br/>
+                  <small>creada {moment(appointment.createdAt).fromNow()}</small><br/>
+                  <small>{appointment.id}</small><br/>
                 </Card.Text>
                 { appointment.estate === "pending" ? <div>
-                <Card.Link href="#" aid={appointment.id} arrindx={index} onClick={this.cancelAppointment}>Cancelar</Card.Link>
-                <Card.Link href="#" aid={appointment.id} arrindx={index} onClick={this.passAppointment}>Cumplir</Card.Link>
+                <Card.Link href="" aid={appointment.id} arrindx={index} onClick={this.cancelAppointment}>Cancelar</Card.Link>
+                <Card.Link href="" aid={appointment.id} arrindx={index} onClick={this.fulfillAppointment}>Cumplir</Card.Link>
                 </div>
-                : appointment.estate === "passed" ? <span className="badge badge-success">Cumplida</span> :
+                : appointment.estate === "fulfilled" ? <span className="badge badge-success">Cumplida</span> :
                 <span className="badge badge-warning">Cancelada</span>
                 }
               </Card.Body>

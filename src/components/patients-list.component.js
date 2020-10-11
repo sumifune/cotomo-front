@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Dropdown from 'react-bootstrap/Dropdown'
 import AppointmentDataService from "../services/appointment.service";
-
+import MediaQuery from 'react-responsive';
 
 export default class PatientsList extends Component {
   constructor(props) {
@@ -26,7 +26,7 @@ export default class PatientsList extends Component {
 
       page: 1,
       count: 0,
-      pageSize: 3,
+      pageSize: 9,
     };
 
     this.pageSizes = [3, 6, 9];
@@ -172,6 +172,10 @@ export default class PatientsList extends Component {
 
   render() {
 
+    // const isMobile = useMediaQuery({
+    //   query: '(max-width: 760px)'
+    // });
+
     const {
       searchSurname,
       patients,
@@ -181,9 +185,10 @@ export default class PatientsList extends Component {
     } = this.state;
 
     return (
-      <div className="list row">
-        <div className="col-md-12">
-          <div className="input-group mb-3">
+      <>
+      <div className="row">
+        <div className="col-12 style={{ boxSizing: 'border-box' }}">
+          <div className="input-group mb-3" style={{ marginTop: '10px' }}>
             <input
               type="text"
               className="form-control"
@@ -203,7 +208,9 @@ export default class PatientsList extends Component {
             </div>
           </div>
         </div>
-        <div className="col-md-12">
+      </div>
+      <div className="row">
+        <div className="col-12">
 
           <div id="accordion">
 
@@ -215,7 +222,7 @@ export default class PatientsList extends Component {
                      id={`heading${index}`}>
 
                   <div className="row">
-                    <div className="col-6 col-md-8" style={{ paddingLeft: '0px'}}>
+                    <div className="col-8 col-md-9" style={{ paddingLeft: '0px'}}>
                       <h5 className="mb-0">
                         <button className={"btn btn-link" + (patient.expanded ? "" : " collapsed")}
                                 data-toggle="collapse"
@@ -229,11 +236,19 @@ export default class PatientsList extends Component {
                         </button>
                       </h5>
                     </div>
-                    <div className="col-6 col-md-4">
+                    <div className="col-4 col-md-3">
 
                       { this.props.match.params.id ?
                         <Dropdown as={ButtonGroup}>
-                          <Button variant="secondary" patientid={patient.id} serviceid="Acupuntura" onClick={this.addAppointment}>Acupuntura</Button>
+                          <Button variant="secondary" patientid={patient.id} serviceid="Acupuntura" onClick={this.addAppointment}>
+                            <MediaQuery minDeviceWidth={760}>
+                              {(matches) =>
+                                matches
+                                  ? 'Acupuntura'
+                                  : 'Acu'
+                              }
+                            </MediaQuery>
+                          </Button>
                           <Dropdown.Toggle split variant="secondary" id="dropdown-split-basic" />
 
                           <Dropdown.Menu>
@@ -269,11 +284,13 @@ export default class PatientsList extends Component {
                      data-parent="#accordion">
                   <div className="card-body">
                     <div className="row">
-                      <div className="col-9">
-                        <p>{patient.address} - &nbsp; {patient.city}</p>
-                        <p>DNI: {patient.dni} - &nbsp; Tel: {patient.phone}</p>
+                      <div className="col-8 col-sm-10">
+                        <p>{patient.address}</p>
+                        <p>{patient.city}</p>
+                        <p>DNI: {patient.dni}</p>
+                        <p>Tel: {patient.phone}</p>
                         <p>{patient.email}</p>
-                        <p>Notas: {patient.description}</p>
+
                         <p className="badgePatient">
                           {patient.active ? (
                             <span className="badge badge-primary">
@@ -286,7 +303,7 @@ export default class PatientsList extends Component {
                           )}
                         </p>
                       </div>
-                      <div className="col-3">
+                      <div className="col-4 col-sm-2">
                         <Link
                           type="button"
                           to={"/patients/" + patient.id}
@@ -294,6 +311,11 @@ export default class PatientsList extends Component {
                         >
                           Editar
                         </Link>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-12 col-sm-12">
+                        <p>Notas: {patient.description}</p>
                       </div>
                     </div>
                   </div>
@@ -304,7 +326,9 @@ export default class PatientsList extends Component {
 
           </div>
         </div>
-        <div className="col-md-12">
+      </div>
+      <div className="row">
+        <div className="col-12">
           <div className="paging">
             <div>
               <span className="selectText">{"Refs por página: "}</span>
@@ -333,6 +357,7 @@ export default class PatientsList extends Component {
           </div>
         </div>
       </div>
+      </>
     );
   }
 }

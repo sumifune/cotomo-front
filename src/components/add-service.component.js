@@ -8,10 +8,12 @@ export default class AddService extends Component {
     this.onChangeName = this.onChangeName.bind(this);
     this.createService = this.createService.bind(this);
     this.newService = this.newService.bind(this);
+    this.onChangeCost = this.onChangeCost.bind(this);
 
     this.state = {
       name: "",
       iva: 0,
+      cost: 0,
       submitted: false,
     };
   }
@@ -28,10 +30,17 @@ export default class AddService extends Component {
     });
   }
 
+  onChangeCost(e) {
+    this.setState({
+      cost: e.target.value,
+    });
+  }
+
   createService() {
     var data = {
       iva: this.state.iva,
-      name: this.state.name
+      name: this.state.name,
+      cost: this.state.cost
     };
 
     ServiceDataService.create(data)
@@ -50,55 +59,73 @@ export default class AddService extends Component {
     this.setState({
       name: "",
       iva: 0,
+      cost: 0,
       submitted: false,
     });
   }
 
   render() {
     return (
-      <div className="submit-form">
-        {this.state.submitted ? (
-          <div>
-            <h4>Servicio añadido correctamente!</h4>
-            <button className="btn btn-success" onClick={this.newService}>
-              Nuevo
-            </button>
+      <div className="row">
+        <div className="col-12" style={{ marginTop: '10px'}}>
+          <div className="submit-form">
+            {this.state.submitted ? (
+              <div>
+                <h4>Servicio añadido correctamente!</h4>
+                <button className="btn btn-success" onClick={this.newService}>
+                  Nuevo
+                </button>
+              </div>
+            ) : (
+              <div>
+
+                <div className="form-group">
+                  <label htmlFor="title">Service</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="name"
+                    required
+                    value={this.state.name}
+                    onChange={this.onChangeName}
+                    name="name"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="iva">IVA</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="iva"
+                    required
+                    value={this.state.iva}
+                    onChange={this.onChangeIVA}
+                    name="iva"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="cost">Coste</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="cost"
+                    required
+                    value={this.state.cost}
+                    onChange={this.onChangeCost}
+                    name="cost"
+                  />
+                </div>
+
+
+                <button style={{marginBottom: "25px"}} onClick={this.createService} className="btn btn-secondary">
+                  Añadir
+                </button>
+              </div>
+            )}
           </div>
-        ) : (
-          <div>
-
-            <div className="form-group">
-              <label htmlFor="title">Service</label>
-              <input
-                type="text"
-                className="form-control"
-                id="name"
-                required
-                value={this.state.name}
-                onChange={this.onChangeName}
-                name="name"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="iva">IVA</label>
-              <input
-                type="text"
-                className="form-control"
-                id="iva"
-                required
-                value={this.state.iva}
-                onChange={this.onChangeIVA}
-                name="iva"
-              />
-            </div>
-
-
-            <button style={{marginBottom: "25px"}} onClick={this.createService} className="btn btn-secondary">
-              Añadir
-            </button>
-          </div>
-        )}
+        </div>
       </div>
     );
   }

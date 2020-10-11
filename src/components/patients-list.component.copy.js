@@ -171,7 +171,8 @@ export default class PatientsList extends Component {
                                 aria-expanded={(patient.expanded ? "true" : "false")}
                                 aria-controls={`collapse${index}`}
                                 inx={index}
-                                onClick={ this.toggleMenu }>
+                                onClick={ this.toggleMenu }
+                                >
                           {patient.surname},&nbsp; {patient.name}
                         </button>
                       </h5>

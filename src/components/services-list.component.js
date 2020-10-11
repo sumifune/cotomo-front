@@ -1,9 +1,5 @@
 import React, { Component } from "react";
 import ServiceDataService from "../services/service.service";
-// import { Link } from "react-router-dom";
-// import './patients-list.component.css';
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
-import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button';
 
 export default class ServicesList extends Component {
@@ -48,7 +44,7 @@ export default class ServicesList extends Component {
     return (
 
           <div className="row">
-            <div className="col-12">
+            <div className="col-12" style={{ marginTop: '10px'}}>
 
               { services && services.map((service, index) => {
 
@@ -57,21 +53,15 @@ export default class ServicesList extends Component {
                           <div className="card">
                             <div className="card-body">
                               <div className="row">
-                                <div className="col-8">
+                                <div className="col-12">
                                   <p>Servicio: {service.name}</p>
-                                  <p>Servicio: {service.cost}</p>
                                   <p>IVA: {service.iva}</p>
+                                  <p>Coste: {service.cost}</p>
                                 </div>
-                                <div className="col-4">
-                                  <Dropdown as={ButtonGroup}>
-                                    <Button variant="secondary" href={"/services/" + service.id}>Modificar</Button>
-
-                                    <Dropdown.Toggle split variant="secondary" id="dropdown-split-basic" />
-
-                                    <Dropdown.Menu>
-                                      <Dropdown.Item href={"/addservice"}>Nuevo</Dropdown.Item>
-                                    </Dropdown.Menu>
-                                  </Dropdown>
+                              </div>
+                              <div className="row">
+                                <div className="col-12">
+                                  <Button variant="secondary" href={"/services/" + service.id}>Modificar</Button>
                                 </div>
                               </div>
                             </div>

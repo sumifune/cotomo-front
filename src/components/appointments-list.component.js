@@ -16,7 +16,12 @@ import Button from 'react-bootstrap/Button';
 // import Popover from 'react-bootstrap/Popover';
 // import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
-import AppointmentItem from './appointment-item';
+// import AppointmentItem from './appointment-item';
+import AppointmentCase from './appointment-case.component';
+
+
+
+
 import './appointments-list.component.css';
 
 
@@ -49,7 +54,6 @@ export default class AddAppointment extends Component {
 
   componentDidMount() {
     // console.log(moment("01-01-2020", "DD-MM-YYYY").format('DD-MM-YYYY'));
-
     if (this.props.match.params.selected){
       this.setState({
         selectedDate: moment(this.props.match.params.selected, "DD-MM-YYYY"),
@@ -185,20 +189,24 @@ export default class AddAppointment extends Component {
 
   }
 
-  cancelAppointment(aid, arrindx, indexdate){
+  cancelAppointment(e){
+
+    const id = e.target.getAttribute('aid');
+    const arrIndx = e.target.getAttribute('arrindx');
+    const indexdate = e.target.getAttribute('indexdate');
 
     const data = {
       estate: "cancelled",
     };
 
-    AppointmentDataService.update(aid, data)
+    AppointmentDataService.update(id, data)
       .then((response) => {
 
         // console.log(response.data);
         this.setState(state => {
 
           let appointments = [...state.appointments];
-          appointments[indexdate][arrindx] = response.data;
+          appointments[indexdate][arrIndx] = response.data;
 
           return {
             appointments,
@@ -224,7 +232,7 @@ export default class AddAppointment extends Component {
     AppointmentDataService.update(id, data)
       .then((response) => {
 
-        console.log(response.data);
+        // console.log(response.data);
         this.setState(state => {
 
           // console.log(response.data);
@@ -263,11 +271,11 @@ export default class AddAppointment extends Component {
     // console.log(selectedDate);
 
     let qdate = moment(this.state.selectedDate).add(day,'days').format('DD-MM-YYYY');
-    console.log(qdate);
+    // console.log(qdate);
 
     let id = hour + "_" + qdate + "_" + selectedDate;
 
-    console.log(id);
+    // console.log(id);
     this.props.history.push('/patients/appoint/' + id);
   }
 
@@ -283,7 +291,14 @@ export default class AddAppointment extends Component {
     const timeSlot = {
       backgroundColor: 'lightgrey',
       // height: '50px',
+      width: '100px',
     };
+    const daySlot = {
+      backgroundColor: 'lightgrey',
+      // width: '100px',
+      // border: '1px solid black'
+    };
+
 
     const dropdownService = {
       paddingTop: '25px',
@@ -294,6 +309,7 @@ export default class AddAppointment extends Component {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
+      // border: '1px solid black',
     }
 
     const {
@@ -335,20 +351,23 @@ export default class AddAppointment extends Component {
       <div className="row">
         <div className="col-md-12">
 
+
+          {/* --------------------------- HEADER --------------------------------------*/}
           <div className="row">
-            <div className="col-2" style={timeSlot}>
+            <div className="col-2 col-sm-1 padding-0" style={daySlot}>
             </div>
             { Array.from({length: 5}, (item, date) => (
-              <div className="col-2" key={date} style={hourHeader}>
+              <div className="col col-sm" key={date} style={hourHeader}>
                 {moment(selectedDate, "DD-MM-YYYY").add(date,'days').format('DD')}
               </div>
             ))}
-
           </div>
+
+
           {Array.from({length: 12}, (item, hour) => (
 
             <div className="row" key={hour}>
-              <div className="col-2" style={timeSlot}>
+              <div className="col-2 col-sm-1 padding-0" style={timeSlot}>
                 <div className="row">
                   <div className="col-2">
                     {(hour + 9).toString() + ":00"}
@@ -360,7 +379,7 @@ export default class AddAppointment extends Component {
               </div>
               { appointments && appointments.map((appointmentDates, indexDate) => (
 
-                <div className="col-2"
+                <div className="col col-sm padding-0"
                   style={timeSlotConainer}
                   key={indexDate}
                   onClick={() => {
@@ -375,7 +394,16 @@ export default class AddAppointment extends Component {
                     return ((hour + 9).toString() + ":00") === appointment.hour ?
                         <div key={index} className="appointmentItem">
                           <div onClick={(e) => {e.stopPropagation()}}>
+                          {/*
                             <AppointmentItem
+                              appointment={appointment}
+                              index={index}
+                              indexdate={indexDate}
+                              fulfillAppointment={ this.fulfillAppointment }
+                              cancelAppointment={this.cancelAppointment}
+                            />
+                          */}
+                            <AppointmentCase
                               appointment={appointment}
                               index={index}
                               indexdate={indexDate}

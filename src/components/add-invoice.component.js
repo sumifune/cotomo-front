@@ -31,7 +31,7 @@ export default class AddVoice extends Component {
         const { data } = response.data;
 
         // console.log(data);
-        // console.log(data[0].id);
+        console.log(data[0].id);
         this.setState({
           services: data,
           concept: data[0].id
@@ -82,13 +82,13 @@ export default class AddVoice extends Component {
   }
 
   newInvoice() {
-    this.setState({
+    this.setState((prevState) => ({
       id: null,
       emittedTo: this.props.match.params.id,
-      concept: "Acupuntura",
+      counter: prevState.counter,
       sessions: 1,
       submitted: false,
-    });
+    }));
   }
 
   render() {
@@ -97,42 +97,46 @@ export default class AddVoice extends Component {
 
 
     return (
-      <div className="submit-form">
-        {this.state.submitted ? (
-          <div>
-            <h4>Factura creada correctamente!</h4>
-            <button className="btn btn-success" onClick={this.newInvoice}>
-              Nueva
-            </button>
+      <div className="row">
+        <div className="col-12" style={{ marginTop: '10px'}}>
+          <div className="submit-form">
+            {this.state.submitted ? (
+              <div>
+                <h4>Factura creada correctamente!</h4>
+                <button className="btn btn-success" onClick={this.newInvoice}>
+                  Nueva
+                </button>
+              </div>
+            ) : (
+              <div>
+                <div className="form-group">
+                  <Form>
+                    <Form.Group controlId="exampleForm.ControlSelect2">
+                      <Form.Label>Concepto</Form.Label>
+                      <Form.Control as="select" onChange={this.onChangeConcept}>
+
+                        { services && services.map((service, index) => {
+
+                          return <option key={index} serviceid={service.id} >{service.name}</option>
+
+                          }
+                        )}
+
+                      </Form.Control>
+                    </Form.Group>
+                    <Form.Group controlId="exampleForm.ControlInput1" onChange={this.onChangeSessions}>
+                      <Form.Label>Sesiones</Form.Label>
+                      <Form.Control type="text" defaultValue={sessions}/>
+                    </Form.Group>
+                  </Form>
+                </div>
+                <button style={{marginBottom: "25px"}} onClick={this.saveInvoice} className="btn btn-secondary">
+                  Añadir
+                </button>
+              </div>
+            )}
           </div>
-        ) : (
-          <div>
-            <div className="form-group">
-              <Form>
-                <Form.Group controlId="exampleForm.ControlSelect2">
-                  <Form.Label>Concepto</Form.Label>
-                  <Form.Control as="select" onChange={this.onChangeConcept}>
-
-                    { services && services.map((service, index) => {
-
-                      return <option key={index} serviceid={service.id} >{service.name}</option>
-
-                      }
-                    )}
-
-                  </Form.Control>
-                </Form.Group>
-                <Form.Group controlId="exampleForm.ControlInput1" onChange={this.onChangeSessions}>
-                  <Form.Label>Sesiones</Form.Label>
-                  <Form.Control type="text" defaultValue={sessions}/>
-                </Form.Group>
-              </Form>
-            </div>
-            <button style={{marginBottom: "25px"}} onClick={this.saveInvoice} className="btn btn-secondary">
-              Añadir
-            </button>
-          </div>
-        )}
+        </div>
       </div>
     );
   }

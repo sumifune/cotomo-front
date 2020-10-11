@@ -139,7 +139,7 @@ export default class ObservationsList extends Component {
 
     return (
       <>
-      <div className="row">
+      <div className="row" style={{ marginTop: '10px' }}>
         <div className="col-6" style={{ marginBottom: '10px'/*width: '18rem'*/ }}>
           <Button href={`/patients/${id}/obs/new`} variant="secondary">Nueva</Button>
         </div>
@@ -167,11 +167,10 @@ export default class ObservationsList extends Component {
 
             return <Card style={{ marginBottom: '10px'/*width: '18rem'*/ }} key={index}>
               <Card.Body>
-                <Card.Title>{moment(observation.createdAt).format("DD-MM-YYYY")}</Card.Title>
+                <Card.Title>{moment(observation.createdAt).format("DD/MM/YYYY - hh:mm:ss")}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
                 <Card.Text>
                 	{observation.note}<br/>
-                	<small>xxx</small><br/>
                 </Card.Text>
                 <Card.Link href="#" aid={observation.id} arrindx={index} onClick={this.deleteObservation}>Borrar</Card.Link>
               </Card.Body>

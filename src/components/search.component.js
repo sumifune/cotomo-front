@@ -45,7 +45,7 @@ function SearchModal(props) {
 
       <Modal show={props.show} onHide={props.handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Filtrar citas</Modal.Title>
         </Modal.Header>
         <Modal.Body>
 	        <Container>
@@ -92,9 +92,9 @@ function SearchModal(props) {
                 title={filter}
                 id="input-group-dropdown-1"
               >
-                <Dropdown.Item href="#" filter="pending" onClick={doFilter}>Pendiente</Dropdown.Item>
-                <Dropdown.Item href="#" filter="cancelled" onClick={doFilter}>Cancelada</Dropdown.Item>
-                <Dropdown.Item href="#" filter="passed" onClick={doFilter}>Cumplir</Dropdown.Item>
+                <Dropdown.Item href="#" filter="pending" onClick={doFilter}>Pendientes</Dropdown.Item>
+                <Dropdown.Item href="#" filter="cancelled" onClick={doFilter}>Canceladas</Dropdown.Item>
+                <Dropdown.Item href="#" filter="fulfilled" onClick={doFilter}>Cumplidas</Dropdown.Item>
                 <Dropdown.Item href="#" filter="all" onClick={doFilter}>Todas</Dropdown.Item>
               </DropdownButton>
               {/*<FormControl aria-describedby="basic-addon1" value={this.state.filter} readOnly />*/}
@@ -106,10 +106,10 @@ function SearchModal(props) {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={props.handleClose}>
-            Close
+            Cerrar
           </Button>
           <Button variant="primary" onClick={handleChange}>
-            Save Changes
+            Filtrar
           </Button>
         </Modal.Footer>
       </Modal>

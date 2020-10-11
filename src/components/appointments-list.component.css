@@ -1,3 +1,11 @@
 .appointmentItem:last-child {
   margin-bottom: 40px;
 }
+.padding-0{
+    padding-right:2px;
+    padding-left:2px;
+}
+.vertext {
+  writing-mode: vertical-lr;
+  text-orientation: upright;
+}

@@ -1,0 +1,17 @@
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  border: 1px line black;
+  /*background-color: #000000;*/
+  width: 100%;
+}
+
+.flex-container > div {
+/*  background-color: #f1f122;
+  width: 100px;
+  margin: 10px;
+  text-align: center;
+  line-height: 75px;
+  font-size: 30px;
+  border: 1px line black;*/
+}

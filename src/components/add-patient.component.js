@@ -127,6 +127,8 @@ export default class AddPatient extends Component {
 
   render() {
     return (
+      <div className="row">
+      <div className="col-12" style={{ marginTop: '10px'}}>
       <form autoComplete="off">
         {this.state.submitted ? (
           <div>
@@ -251,6 +253,8 @@ export default class AddPatient extends Component {
           </div>
         )}
       </form>
+      </div>
+      </div>
     );
   }
 }
