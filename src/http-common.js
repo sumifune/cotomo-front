@@ -1,9 +1,14 @@
 import axios from "axios";
 
+const baseURL = process.env.NODE_ENV !== 'production' ?
+							  process.env.REACT_APP_BASE_URL_DEVELOPMENT :
+								process.env.REACT_APP_BASE_URL_PRODUCTION;
+
+
+console.log("baseURL " + baseURL);
+
 export default axios.create({
-  // baseURL: "http://192.168.99.100/api",
-  baseURL: "http://128.199.52.198/api",
-  // baseURL: "http://localhost:3000/api",
+  baseURL: baseURL,
   headers: {
     "Content-type": "application/json",
   },

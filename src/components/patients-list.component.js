@@ -8,6 +8,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Dropdown from 'react-bootstrap/Dropdown'
 import AppointmentDataService from "../services/appointment.service";
 import MediaQuery from 'react-responsive';
+import Image from 'react-bootstrap/Image';
 
 export default class PatientsList extends Component {
   constructor(props) {
@@ -355,6 +356,9 @@ export default class PatientsList extends Component {
               </div>
             </div>
           </div>
+        </div>
+        <div className="col-12">
+          <Image src="https://github.com/sumifune/cotomo-front/workflows/Node.js%20CI/badge.svg" rounded />
         </div>
       </div>
       </>

@@ -271,7 +271,6 @@ export default class InvoicesList extends Component {
     return (
         <>
         <div className="row">
-        xxx
           <div className="col-12">
             <div className="input-group mb-3"  style={{ marginTop: '10px' }}>
               <input
