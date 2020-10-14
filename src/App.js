@@ -30,28 +30,28 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 class App extends Component {
   render() {
     return <>
-
-          <Navbar bg="dark" variant="dark" fixed="top">
-            <Navbar.Brand href="/patients">Otomo</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="mr-auto">
-                <Nav.Link href="/appointments">Citas</Nav.Link>
-                <NavDropdown alignRight title="Pacientes" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="/patients">Buscar</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="/add">Nuevo</NavDropdown.Item>
-                </NavDropdown>
-                <NavDropdown alignRight title="Facturas" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="/invoices">Facturas</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="/services">Servicios</NavDropdown.Item>
-                  <NavDropdown.Item href="/addservice">Nuevo Servicio</NavDropdown.Item>
-                </NavDropdown>
-              </Nav>
-            </Navbar.Collapse>
-          </Navbar>
-
+          <div>
+            <Navbar bg="dark" variant="dark" fixed="top">
+              <Navbar.Brand href="/patients">Otomo</Navbar.Brand>
+              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="mr-auto">
+                  <Nav.Link href="/appointments">Citas</Nav.Link>
+                  <NavDropdown alignRight title="Pacientes" id="basic-nav-dropdown">
+                    <NavDropdown.Item href="/patients">Buscar</NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item href="/add">Nuevo</NavDropdown.Item>
+                  </NavDropdown>
+                  <NavDropdown alignRight title="Facturas" id="basic-nav-dropdown">
+                    <NavDropdown.Item href="/invoices">Facturas</NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item href="/services">Servicios</NavDropdown.Item>
+                    <NavDropdown.Item href="/addservice">Nuevo Servicio</NavDropdown.Item>
+                  </NavDropdown>
+                </Nav>
+              </Navbar.Collapse>
+            </Navbar>
+          </div>
           <div className="container">
             <Router>
               <Switch>
