@@ -13,3 +13,6 @@
   max-width: 300px;
   margin: auto;
 }
+body {
+  padding-top: 60px;
+}

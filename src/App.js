@@ -29,8 +29,9 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 class App extends Component {
   render() {
-    return  <>
-          <Navbar bg="dark" variant="dark">
+    return <>
+
+          <Navbar bg="dark" variant="dark" fixed="top">
             <Navbar.Brand href="/patients">Otomo</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
@@ -51,56 +52,56 @@ class App extends Component {
             </Navbar.Collapse>
           </Navbar>
 
-            <div className="container">
-              <Router>
-                <Switch>
-                  <Route
-                    exact
-                    path={["/", "/patients"]}
-                    component={PatientsList}
-                  />
-                  <Route
-                    exact
-                    path={["/", "/patients/appoint/:id"]}
-                    component={PatientsList}
-                  />
-                  <Route exact path="/add" component={AddPatient} />
-                  <Route exact path="/patients/:id" component={Patient} />
-                  <Route exact path="/patients/:id/obs" component={ObservationsList} />
-                  <Route path="/patients/:id/obs/new" component={AddObservation} />
-                  <Route
-                    exact
-                    path={["/", "/appointments"]}
-                    component={AppointmentsList}
-                  />
-                  <Route
-                    exact
-                    path={["/", "/appointments/after/:selected"]}
-                    component={AppointmentsList}
-                  />
-                  <Route exact path="/addappointment/:id" component={AddAppointment} />
-                  {/*<Route path="/appointments/:id" component={Appointment} />*/}
-                  <Route path="/appointments/patient/:id" component={AppointmentsListByPatient} />
-                  <Route
-                    exact
-                    path={["/", "/invoices"]}
-                    component={InvoicesList}
-                  />
-                  <Route exact path="/addinvoice/:id" component={AddInvoice} />
-                  <Route path="/invoices/patient/:id" component={InvoicesListByPatient} />
-                  <Route
-                    exact
-                    path={["/", "/services"]}
-                    component={ServicesList}
-                  />
-                  <Route exact path="/addservice" component={AddService} />
-                  <Route exact path="/services/:id" component={Service} />
-                  {/*
-                  */}
-                </Switch>
-              </Router>
-            </div>
-            </>
+          <div className="container">
+            <Router>
+              <Switch>
+                <Route
+                  exact
+                  path={["/", "/patients"]}
+                  component={PatientsList}
+                />
+                <Route
+                  exact
+                  path={["/", "/patients/appoint/:id"]}
+                  component={PatientsList}
+                />
+                <Route exact path="/add" component={AddPatient} />
+                <Route exact path="/patients/:id" component={Patient} />
+                <Route exact path="/patients/:id/obs" component={ObservationsList} />
+                <Route path="/patients/:id/obs/new" component={AddObservation} />
+                <Route
+                  exact
+                  path={["/", "/appointments"]}
+                  component={AppointmentsList}
+                />
+                <Route
+                  exact
+                  path={["/", "/appointments/after/:selected"]}
+                  component={AppointmentsList}
+                />
+                <Route exact path="/addappointment/:id" component={AddAppointment} />
+                {/*<Route path="/appointments/:id" component={Appointment} />*/}
+                <Route path="/appointments/patient/:id" component={AppointmentsListByPatient} />
+                <Route
+                  exact
+                  path={["/", "/invoices"]}
+                  component={InvoicesList}
+                />
+                <Route exact path="/addinvoice/:id" component={AddInvoice} />
+                <Route path="/invoices/patient/:id" component={InvoicesListByPatient} />
+                <Route
+                  exact
+                  path={["/", "/services"]}
+                  component={ServicesList}
+                />
+                <Route exact path="/addservice" component={AddService} />
+                <Route exact path="/services/:id" component={Service} />
+                {/*
+                */}
+              </Switch>
+            </Router>
+          </div>
+        </>
   }
 }
 
