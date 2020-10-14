@@ -29,4 +29,4 @@ jobs:
         yarn build
     - name: restart docker compose
       run: |
-        ( cd ~/clinic && ls )
+        ( cd ~/clinic && docker-compose restart )
