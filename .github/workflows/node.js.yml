@@ -27,3 +27,6 @@ jobs:
       run: |
         yarn
         yarn build
+    - name: restart docker compose
+      run: |
+        ( cd ~/clinic && ls )
