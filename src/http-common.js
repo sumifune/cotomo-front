@@ -4,9 +4,6 @@ const baseURL = process.env.NODE_ENV !== 'production' ?
 							  process.env.REACT_APP_BASE_URL_DEVELOPMENT :
 								process.env.REACT_APP_BASE_URL_PRODUCTION;
 
-
-console.log("baseURL " + baseURL);
-
 export default axios.create({
   baseURL: baseURL,
   headers: {

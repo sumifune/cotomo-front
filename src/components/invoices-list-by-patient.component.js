@@ -171,7 +171,7 @@ export default class InvoicesListByPatient extends Component {
 
     return (
       <>
-      <div className="row">
+      <div className="row" style={{ marginTop: '10px'}}>
         <div className="col-md-12">
           { invoices && invoices.filter(invoice => filter === 'all' ? true : invoice.estate === filter).map((invoice, index) => {
 
