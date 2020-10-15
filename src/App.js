@@ -30,31 +30,42 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 class App extends Component {
   render() {
     return <>
-          <div>
-            <Navbar bg="dark" variant="dark" fixed="top">
-              <Navbar.Brand href="/patients">Otomo</Navbar.Brand>
-              <Navbar.Toggle aria-controls="basic-navbar-nav" />
-              <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="mr-auto">
-                  <Nav.Link href="/appointments">Citas</Nav.Link>
-                  <NavDropdown alignRight title="Pacientes" id="basic-nav-dropdown">
-                    <NavDropdown.Item href="/patients">Buscar</NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="/add">Nuevo</NavDropdown.Item>
-                  </NavDropdown>
-                  <NavDropdown alignRight title="Facturas" id="basic-nav-dropdown">
-                    <NavDropdown.Item href="/invoices">Facturas</NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="/services">Servicios</NavDropdown.Item>
-                    <NavDropdown.Item href="/addservice">Nuevo Servicio</NavDropdown.Item>
-                  </NavDropdown>
-                </Nav>
-              </Navbar.Collapse>
-            </Navbar>
-          </div>
+          <Navbar bg="dark" variant="dark" fixed="top">
+            <Navbar.Brand href="/patients">Otomo</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="mr-auto">
+                <Nav.Link href="/appointments">Citas</Nav.Link>
+                <NavDropdown alignRight title="Pacientes" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="/patients">Buscar</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="/add">Nuevo</NavDropdown.Item>
+                </NavDropdown>
+                <NavDropdown alignRight title="Facturas" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="/invoices">Facturas</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="/services">Servicios</NavDropdown.Item>
+                  <NavDropdown.Item href="/addservice">Nuevo Servicio</NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
           <div className="container">
             <Router>
               <Switch>
+                <Route
+                  exact
+                  path={["/", "/appointments"]}
+                  component={AppointmentsList}
+                />
+                <Route
+                  exact
+                  path={["/", "/appointments/after/:selected"]}
+                  component={AppointmentsList}
+                />
+                <Route exact path="/addappointment/:id" component={AddAppointment} />
+                {/*<Route path="/appointments/:id" component={Appointment} />*/}
+                <Route path="/appointments/patient/:id" component={AppointmentsListByPatient} />
                 <Route
                   exact
                   path={["/", "/patients"]}
@@ -69,19 +80,6 @@ class App extends Component {
                 <Route exact path="/patients/:id" component={Patient} />
                 <Route exact path="/patients/:id/obs" component={ObservationsList} />
                 <Route path="/patients/:id/obs/new" component={AddObservation} />
-                <Route
-                  exact
-                  path={["/", "/appointments"]}
-                  component={AppointmentsList}
-                />
-                <Route
-                  exact
-                  path={["/", "/appointments/after/:selected"]}
-                  component={AppointmentsList}
-                />
-                <Route exact path="/addappointment/:id" component={AddAppointment} />
-                {/*<Route path="/appointments/:id" component={Appointment} />*/}
-                <Route path="/appointments/patient/:id" component={AppointmentsListByPatient} />
                 <Route
                   exact
                   path={["/", "/invoices"]}
