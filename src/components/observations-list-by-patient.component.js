@@ -32,11 +32,11 @@ export default class ObservationsList extends Component {
   retrieveObservations() {
     const { id } = this.state;
 
-    console.log("ID del param es: " + id);
+    // console.log("ID del param es: " + id);
 
     PatientDataService.findObservations(id)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
 
         let sortedArray = response.data.sort(function(a,b){
           // Turn your strings into dates, and then subtract them

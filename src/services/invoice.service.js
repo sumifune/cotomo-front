@@ -1,8 +1,17 @@
 import http from "../http-common";
+import dd from "../download";
 
 class InvoiceDataService {
   getAll(params) {
     return http.get("/invoices", { params });
+  }
+
+  generateExcel(params) {
+    return http.get("/invoices/genexcel", { params });
+  }
+
+  downloadExcel() {
+    return dd.get("/invoices/downloadexcel");
   }
 
   get(id) {

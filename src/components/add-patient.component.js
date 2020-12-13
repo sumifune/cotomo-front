@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import PatientDataService from "../services/patient.service";
 
+import SignaturePad from 'react-signature-canvas';
+import './add-patient.component.css';
+
 export default class AddPatient extends Component {
   constructor(props) {
     super(props);
@@ -28,9 +31,20 @@ export default class AddPatient extends Component {
       active: false,
 
       submitted: false,
+      trimmedDataURL: null,
     };
+    this.sigPad = {};
   }
-
+  clear = (e) => {
+    e.preventDefault();
+    this.sigPad.clear();
+    this.setState({trimmedDataURL: null});
+  }
+  trim = (e) => {
+    e.preventDefault();
+    this.setState({trimmedDataURL: this.sigPad.getTrimmedCanvas()
+      .toDataURL('image/png')});
+  }
   onChangeName(e) {
     this.setState({
       name: e.target.value,
@@ -74,6 +88,13 @@ export default class AddPatient extends Component {
   }
 
   savePatient() {
+
+    // console.log(this.state.trimmedDataURL);
+    if (!!!this.state.trimmedDataURL) {
+      console.log('trimmedDataURL not set');
+      return;
+    }
+
     var data = {
       name: this.state.name,
       surname: this.state.surname,
@@ -83,6 +104,7 @@ export default class AddPatient extends Component {
       phone: this.state.phone,
       email: this.state.email,
       description: this.state.description,
+      signature: this.state.trimmedDataURL
     };
 
     PatientDataService.create(data)
@@ -98,6 +120,7 @@ export default class AddPatient extends Component {
           email: response.data.email,
           description: response.data.description,
           active: response.data.active,
+          signature: response.data.signature,
 
           submitted: true,
         });
@@ -120,6 +143,7 @@ export default class AddPatient extends Component {
       email: "",
       description: "",
       active: false,
+      trimmedDataURL: null,
 
       submitted: false,
     });
@@ -247,9 +271,40 @@ export default class AddPatient extends Component {
               />
             </div>
 
-            <button style={{marginBottom: "25px"}} onClick={this.savePatient} className="btn btn-secondary">
-              Añadir
-            </button>
+            <div className="sigContainer">
+              <SignaturePad
+                canvasProps={{className: 'sigPad'}}
+                ref={(ref) => { this.sigPad = ref }}
+              />
+            </div>
+            <div className='row buttons-margin'>
+              <div className="col">
+                <button className="buttons" onClick={this.clear}>
+                  Reset
+                </button>
+              </div>
+              <div className="col">
+                <button className="buttons" onClick={this.trim}>
+                  Capturar
+                </button>
+              </div>
+            </div>
+            <div className='row'>
+              <div className="col text-center">
+                {this.state.trimmedDataURL
+                  ? <img className="sigImage"
+                    src={this.state.trimmedDataURL} alt='manolito'/>
+                  : null}
+              </div>
+            </div>
+            <div className='row'>
+              <div className="col text-center">
+                <button style={{marginBottom: "25px", marginTop: "20px"}} onClick={this.savePatient} className="btn btn-secondary">
+                  Añadir
+                </button>
+              </div>
+            </div>
+
           </div>
         )}
       </form>

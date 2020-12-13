@@ -6,7 +6,13 @@ const baseURL = process.env.NODE_ENV !== 'production' ?
 
 export default axios.create({
   baseURL: baseURL,
-  headers: {
-    "Content-type": "application/json",
-  },
+  // headers: {
+  //   "Content-type": "application/json",
+  // },
+  responseType: 'blob',
 });
+
+
+// axios({
+//   url: 'http://localhost:3000/static/example.pdf',
+// });

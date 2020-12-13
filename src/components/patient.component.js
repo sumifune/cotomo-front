@@ -31,7 +31,7 @@ export default class Patient extends Component {
         email: "",
         description: "",
         active: false,
-
+        signature: null,
         submitted: false,
       },
       message: "",
@@ -147,6 +147,7 @@ export default class Patient extends Component {
   getPatient(id) {
     PatientDataService.get(id)
       .then((response) => {
+        // console.log(response.data.signature);
         this.setState({
           currentPatient: response.data,
         });
@@ -302,6 +303,7 @@ export default class Patient extends Component {
                 />
               </div>
 
+
               <div className="form-group">
                 <label>
                   <strong>Estado:</strong>
@@ -309,6 +311,7 @@ export default class Patient extends Component {
                 {currentPatient.active ? "Active" : "Inactive"}
               </div>
             </form>
+
             <div className="action-buttons">
               {currentPatient.active ? (
                 <button
@@ -341,6 +344,14 @@ export default class Patient extends Component {
                 Actualizar
               </button>
               <p>{this.state.message}</p>
+            </div>
+            <div className='row'>
+              <div className="col text-center">
+                {this.state.currentPatient.signature
+                  ? <img className="sigImage"
+                    src={this.state.currentPatient.signature} alt='manolito'/>
+                  : null}
+              </div>
             </div>
           </div>
         ) : (

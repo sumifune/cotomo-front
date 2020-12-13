@@ -23,7 +23,7 @@ export default class ServicesList extends Component {
       .then((response) => {
         const { data } = response.data;
 
-        console.log(data);
+        // console.log(data);
         // console.log(response.data.data);
 
         this.setState({
@@ -48,7 +48,7 @@ export default class ServicesList extends Component {
 
               { services && services.map((service, index) => {
 
-                return <div className="row"  key={index}>
+                return <div className="row"  key={index} style={{ marginTop: '10px' }}>
                         <div className="col-12">
                           <div className="card">
                             <div className="card-body">

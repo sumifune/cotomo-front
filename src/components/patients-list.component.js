@@ -34,7 +34,7 @@ export default class PatientsList extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.match.params.id);
+    // console.log(this.props.match.params.id);
     this.retrievePatients();
   }
 
@@ -108,7 +108,7 @@ export default class PatientsList extends Component {
 
   handleKeyPress = (event) => {
     if(event.key === 'Enter'){
-      console.log('enter press here! ');
+      // console.log('enter press here! ');
       this.retrievePatients();
     }
   }

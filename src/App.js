@@ -14,14 +14,14 @@ import AppointmentsListByPatient from "./components/appointments-list-by-patient
 import InvoicesList from "./components/invoices-list.component";
 import AddInvoice from "./components/add-invoice.component";
 import InvoicesListByPatient from "./components/invoices-list-by-patient.component";
-
+import InvoicePDF from "./components/invoice-pdf.component";
+// import InvoicePDF from "./components/invoice-pdf-functional.component";
 import ObservationsList from "./components/observations-list-by-patient.component";
 import AddObservation from "./components/add-observation.component";
 
 import ServicesList from "./components/services-list.component";
 import AddService from "./components/add-service.component";
 import Service from "./components/service.component";
-
 
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
@@ -87,6 +87,8 @@ class App extends Component {
                 />
                 <Route exact path="/addinvoice/:id" component={AddInvoice} />
                 <Route path="/invoices/patient/:id" component={InvoicesListByPatient} />
+                <Route path="/invoices/pdf/:id" component={InvoicePDF} />
+
                 <Route
                   exact
                   path={["/", "/services"]}

@@ -18,7 +18,12 @@ import Dropdown from 'react-bootstrap/Dropdown';
 // import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import Button from 'react-bootstrap/Button';
 
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import MediaQuery from 'react-responsive';
+
+import { Link } from "react-router-dom";
 
 
 export default class InvoicesList extends Component {
@@ -32,9 +37,10 @@ export default class InvoicesList extends Component {
     this.setDate1 = this.setDate1.bind(this);
     this.setDate2 = this.setDate2.bind(this);
     this.cancelInvoice = this.cancelInvoice.bind(this);
-    this.payInvoice = this.payInvoice.bind(this);
+    // this.payInvoice = this.payInvoice.bind(this);
     this.sayHi = this.sayHi.bind(this);
-
+    this.generateExcel = this.generateExcel.bind(this);
+    this.descExcel = this.descExcel.bind(this);
 
     this.state = {
       invoices: [],
@@ -44,6 +50,10 @@ export default class InvoicesList extends Component {
       page: 1,
       count: 0,
       pageSize: 6,
+      total: 0,
+      numberInvoices: 0,
+      numCanInvoices: 0,
+      downloadExcel: false,
     };
 
     this.pageSizes = [3, 6, 9];
@@ -87,22 +97,55 @@ export default class InvoicesList extends Component {
     return params;
   }
 
+  generateExcel() {
+    const { searchSurname, date1, date2, page, pageSize } = this.state;
+    const params = this.getRequestParams(searchSurname, date1.format("DD-MM-YYYY"), date2.format("DD-MM-YYYY"), page, pageSize);
+
+    InvoiceDataService.generateExcel(params)
+      .then((response) => {
+        const { estate } = response.data;
+
+        this.setState({
+          downloadExcel: estate,
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  descExcel() {
+    InvoiceDataService.downloadExcel()
+      .then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'Acupuntura.xlsx');
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    // console.log('descargando...');
+  }
+
   retrieveInvoices() {
     const { searchSurname, date1, date2, page, pageSize } = this.state;
     const params = this.getRequestParams(searchSurname, date1.format("DD-MM-YYYY"), date2.format("DD-MM-YYYY"), page, pageSize);
 
-    // console.log(params);
-
     InvoiceDataService.getAll(params)
       .then((response) => {
-        const { invoices, totalPages } = response.data;
+        const { invoices, totalPages, totalInvoices, numberInvoices, numCanInvoices } = response.data;
 
-        // console.log(invoices);
         this.setState({
           invoices: invoices,
           count: totalPages,
+          // total: invoices.map(amount).reduce(sum),
+          total: totalInvoices,
+          numberInvoices: numberInvoices,
+          numCanInvoices: numCanInvoices,
         });
-        // console.log(response.data);
       })
       .catch((e) => {
         console.log(e);
@@ -211,38 +254,22 @@ export default class InvoicesList extends Component {
           // sustituir el appo. por el que llega del backend en vez de concat
           // const invoices = state.invoices.concat(response.data);
 
-          return {
-            invoices,
-          };
+          let total = state.total;
+          total = total - response.data.total;
 
-        });
-      })
-      .catch((e) => {
-        console.log(e);
-      });
 
-  }
+          let numberInvoices = state.numberInvoices;
+          numberInvoices = numberInvoices - 1;
 
-  payInvoice(e) {
+          let numCanInvoices = state.numCanInvoices;
+          numCanInvoices = numCanInvoices + 1;
 
-    const id = e.target.getAttribute('aid');
-    const arrIndx = e.target.getAttribute('arrindx');
-
-    const data = {
-      estate: "payed",
-    };
-
-    InvoiceDataService.update(id, data)
-      .then((response) => {
-
-        // console.log(response.data);
-        this.setState(state => {
-
-          let invoices = [...state.invoices];
-          invoices[arrIndx] = response.data;
 
           return {
             invoices,
+            total,
+            numberInvoices,
+            numCanInvoices,
           };
 
         });
@@ -266,6 +293,10 @@ export default class InvoicesList extends Component {
       page,
       count,
       pageSize,
+      total,
+      numberInvoices,
+      numCanInvoices,
+      downloadExcel,
     } = this.state;
 
     return (
@@ -327,54 +358,61 @@ export default class InvoicesList extends Component {
             </MuiPickersUtilsProvider>
           </div>
         </div>
+        <div className="row" style={{ marginTop: '10px' }}>
+          <div className="col-7 col-sm-9">
+            <span>Total: {total} | #: {numberInvoices} | X: {numCanInvoices}</span>
+          </div>
+          <div className="col-5 col-sm-3">
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={ downloadExcel ? this.descExcel : this.generateExcel}
+              className="float-right"
+            >
+              { downloadExcel ? "Descargar" : "Generar Excel"}
+            </Button>
+          </div>
+        </div>
 
           { invoices && invoices.map((invoice, index) => {
 
-            return <div className="row" key={index}>
+            return <div className="row" key={index} style={{ marginTop: '10px' }}>
                       <div className="col-12">
                         <div className="card" style={{ marginBottom: '10px' }} key={index}>
                           <div className="card-header">
                             <div className="row">
                               <div className="col-8">
                                 {invoice.inumber}/{moment(invoice.createdAt).format('YYYY')}&nbsp;&nbsp;&nbsp;{moment(invoice.date).format("DD-MM-YYYY")}
+
                               </div>
                               <div className="col-4">
-
 
                                 { invoice.estate === "emitted" ?
 
                                 <div className="d-flex justify-content-end">
-
                                   <DropdownButton
-                                    variant="secondary"
+                                    variant="danger"
                                     size="sm"
                                     id="dropdown-basic-button"
-                                    title="Acciones">
-                                    <Dropdown.Item
-                                      href=""
-                                      aid={invoice.id}
-                                      arrindx={index}
-                                      onClick={this.payInvoice}
-                                    >
-                                      Pagar
-                                    </Dropdown.Item>
+                                    title="Cancelar">
                                     <Dropdown.Item
                                       href=""
                                       aid={invoice.id}
                                       arrindx={index}
                                       onClick={this.cancelInvoice}
                                     >
-                                      Cancelar
+                                      Irreversiblemente
                                     </Dropdown.Item>
                                   </DropdownButton>
 
                                 </div>
-                                : invoice.estate === "payed" ?
-                                  <div className="d-flex justify-content-end">
-                                    <span className="badge badge-primary">Pagada</span>
-                                  </div> :
+                                : invoice.estate === "cancelled" ?
                                   <div className="d-flex justify-content-end">
                                     <span className="badge badge-danger">Cancelada</span>
+                                  </div>
+                                :
+                                  <div className="d-flex justify-content-end">
+                                    <span className="badge badge-danger">Pagada</span>
                                   </div>
                                 }
 
@@ -393,37 +431,60 @@ export default class InvoicesList extends Component {
                               {invoice.dni}
                             </p>
                             <div className="row" style={{ borderRadius: '3px',background: '#F7F7F7', border: '1px solid lightgrey'}}>
-                              <div className="col-6">
+                              <div className="col-6 col-sm-6">
                                 <span>Concepto</span>
                               </div>
-                              <div className="col-2" style={{ paddingLeft: '0px',paddingRight: '0px'}}>
+                              <div className="col-0 col-sm-1 d-none d-sm-block" style={{ paddingLeft: '0px',paddingRight: '0px'}}>
+                                <span>Ses</span>
+                              </div>
+                              <div className="col-2 col-sm-2" style={{ paddingLeft: '0px',paddingRight: '0px'}}>
                                 Base
                               </div>
-                              <div className="col-1" style={{ paddingLeft: '0px',paddingRight: '0px'}}>
+                              <div className="col-1 col-sm-1" style={{ paddingLeft: '0px',paddingRight: '0px'}}>
                                 <span>IVA</span>
                               </div>
-                              <div className="col-3">
+                              <div className="col-3 col-sm-2">
                                 <span>Total</span>
                               </div>
                             </div>
                             <div className="row">
-                              <div className="col-6">
-                                <span>{invoice.concept}</span>
+                              <div className="col-6 col-sm-6">
+														    <MediaQuery maxWidth={576}>
+														      {/* You can also use a function (render prop) as a child */}
+														      {(matches) =>
+														        matches
+														          ? <span>{ invoice.sessions + "x " + invoice.concept }</span>
+														          : <span>{ invoice.concept }</span>
+														      }
+														    </MediaQuery>
                               </div>
-                              <div className="col-2" style={{ paddingLeft: '0px',paddingRight: '0px'}}>
+                              <div className="col-0 col-sm-1 d-none d-sm-block" style={{ paddingLeft: '0px',paddingRight: '0px'}}>
+                                <span>{invoice.sessions}</span>
+                              </div>
+                              <div className="col-2 col-sm-2" style={{ paddingLeft: '0px',paddingRight: '0px'}}>
                                 <span>{invoice.base}</span>
                               </div>
-                              <div className="col-1" style={{ paddingLeft: '0px',paddingRight: '0px'}}>
+                              <div className="col-1 col-sm-1" style={{ paddingLeft: '0px',paddingRight: '0px'}}>
                                 <span>{invoice.iva}</span>
                               </div>
-                              <div className="col-3">
+                              <div className="col-3 col-sm-2">
                                 <span>{invoice.total}</span>
                               </div>
                             </div>
                             <hr/>
                             <div className="row">
                               <div className="col-6">
-                                <small>creada {moment(invoice.createdAt).fromNow()}</small>
+                                {/* <small>creada {moment(invoice.createdAt).fromNow()}</small> */}
+                                <Link to={{
+                                  pathname: '/invoices/pdf/' + invoice.inumber,
+                                  state: {
+                                    invoice: invoice,
+                                    xxx: invoice.name,
+                                  },
+                                  myCustomProps: "invoice"
+                                }}>
+                                  Imprimir
+                                </Link>
                               </div>
                               <div className="col-6 d-flex justify-content-end" style={{paddingTop: '3px'}}>
                                 <small>{invoice.emittedTo ? invoice.emittedTo._id : "ficha eliminada"}</small>

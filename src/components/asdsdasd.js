@@ -92,7 +92,7 @@ export default class AddAppointment extends Component {
 
     AppointmentDataService.findByDateNext(selectedDate.format('DD/MM/YYYY'))
       .then((response) => {
-        // console.log(response);
+        console.log(response);
         const { nextFiveDates } = response.data;
         // console.log(nextFiveDates);
         this.setState({
@@ -317,9 +317,6 @@ export default class AddAppointment extends Component {
       selectedDate,
     } = this.state;
 
-    const timesX = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00',
-    '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30',
-    '20:00', '20:30', '21:00'];
     // console.log(selectedDate.format('DD/MM/YYYY'));
     return (
       <>
@@ -366,13 +363,14 @@ export default class AddAppointment extends Component {
             ))}
           </div>
 
-          { timesX.map((hour) => (
+
+          {Array.from({length: 24}, (item, hour) => (
 
             <div className="row" key={hour}>
               <div className="col-2 col-sm-1 padding-0" style={timeSlot}>
                 <div className="row">
                   <div className="col-2">
-                    {hour}
+                    {((hour) % 2  === 0) ? (hour + 9).toString() + ":00" + hour : "X" }
                   </div>
                   <div style={aaaa} className="col-10">
                     &nbsp;
@@ -386,14 +384,14 @@ export default class AddAppointment extends Component {
                   key={indexDate}
                   onClick={() => {
                     // console.log((hour + 9).toString() + ":00");
-                    this.redirectPatients(hour, indexDate, moment(this.state.selectedDate, "DD-MM-YYYY").format("DD-MM-YYYY"));
+                    this.redirectPatients((hour + 9).toString() + ":00", indexDate, moment(this.state.selectedDate, "DD-MM-YYYY").format("DD-MM-YYYY"));
                     }
                   }
                 >
 
                   { appointmentDates && appointmentDates.map((appointment, index) => {
 
-                    return (hour) === appointment.hour ?
+                    return ((hour + 9).toString() + ":00") === appointment.hour ?
                         <div key={index} className="appointmentItem">
                           <div onClick={(e) => {e.stopPropagation()}}>
                           {/*
@@ -415,7 +413,7 @@ export default class AddAppointment extends Component {
                           </div>
                         </div>
 
-                    : (hour) === appointment.hour ?
+                    : ((hour + 9).toString() + ":30") === appointment.hour ?
 
                         <div key={index} className="appointmentItem">
                           <div onClick={(e) => {e.stopPropagation()}}>
@@ -450,12 +448,7 @@ export default class AddAppointment extends Component {
 
             </div>
 
-          )
-
-
-          )
-
-        }
+          ))}
 
           <p>&nbsp;</p>
         </div>
