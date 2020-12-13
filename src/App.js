@@ -10,7 +10,7 @@ import AppointmentsList from "./components/appointments-list.component";
 import AddAppointment from "./components/add-appointment.component";
 // import Appointment from "./components/appointment.component";
 import AppointmentsListByPatient from "./components/appointments-list-by-patient.component";
-
+// dsfsdf
 import InvoicesList from "./components/invoices-list.component";
 import AddInvoice from "./components/add-invoice.component";
 import InvoicesListByPatient from "./components/invoices-list-by-patient.component";
