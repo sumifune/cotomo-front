@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-import AddPatient from "./components/add-patient.component";
+// import AddPatient from "./components/add-patient.component";
+import AddPatient from "./components/add-patient.component.2";
+
 import Patient from "./components/patient.component";
 import PatientsList from "./components/patients-list.component";
 import AppointmentsList from "./components/appointments-list.component";

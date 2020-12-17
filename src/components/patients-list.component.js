@@ -9,6 +9,9 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import AppointmentDataService from "../services/appointment.service";
 import MediaQuery from 'react-responsive';
 import Image from 'react-bootstrap/Image';
+import moment from "moment";
+
+
 
 export default class PatientsList extends Component {
   constructor(props) {
@@ -317,6 +320,11 @@ export default class PatientsList extends Component {
                     <div className="row">
                       <div className="col-12 col-sm-12">
                         <p>Notas: {patient.description}</p>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-12 col-sm-12">
+                        <p>Registrado: {moment(patient.createdAt).format("DD-MM-YYYY hh:mm:ss")}</p>
                       </div>
                     </div>
                   </div>
