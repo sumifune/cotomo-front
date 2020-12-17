@@ -30,7 +30,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts --max_old_space_size=900 build",
+    "build": "react-scripts build",
+    "b2": "react-scripts --max_old_space_size=700 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
