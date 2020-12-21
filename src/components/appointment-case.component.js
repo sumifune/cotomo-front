@@ -1,11 +1,9 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
-
-
-
-
 
 import { useMediaQuery } from 'react-responsive';
 import moment from "moment";
@@ -24,9 +22,9 @@ const AppointmentCase = (props) => {
     query: '(max-width: 760px)'
   })
 
-  let { service, estate } = props.appointment;
+  let { service, estate, madeBy } = props.appointment;
 
-  function calcStyle(service, estate){
+  function calcStyle(service, estate, madeBy){
 
     const appointA = {
       backgroundColor: '#bde4ea',
@@ -39,6 +37,19 @@ const AppointmentCase = (props) => {
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: '4px',
+    };
+    const appointAFirst = {
+      backgroundColor: '#bde4ea',
+      height: '40px',
+      marginTop: '10px',
+      marginBottom: '10px',
+      // paddingLeft: '0px',
+      // paddingTop: '8px',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: '4px',
+      border: '2px solid red'
     };
     const appointAF = {
       backgroundColor: '#bde400',
@@ -77,6 +88,19 @@ const AppointmentCase = (props) => {
       alignItems: 'center',
       borderRadius: '4px',
     };
+    const appointPFirst = {
+      backgroundColor: '#f4c9c9',
+      height: '40px',
+      marginTop: '10px',
+      marginBottom: '10px',
+      // paddingLeft: '12px',
+      // paddingTop: '8px',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: '4px',
+      border: '2px solid red'
+    };
     const appointPF = {
       backgroundColor: '#bde400',
       height: '40px',
@@ -107,7 +131,14 @@ const AppointmentCase = (props) => {
 
         switch (estate) {
           case 'pending':
-            return appointA;
+            switch (madeBy.pdok) {
+              case true:
+                return appointA;
+              case false:
+                return appointAFirst;
+              default:
+                return {};
+            }
           case 'fulfilled':
             return appointAF;
           case 'cancelled':
@@ -119,7 +150,14 @@ const AppointmentCase = (props) => {
 
         switch (estate) {
           case 'pending':
-            return appointP;
+            switch (madeBy.pdok) {
+              case true:
+                return appointP;
+              case false:
+                return appointPFirst;
+              default:
+                return {};
+            }
           case 'fulfilled':
             return appointPF;
           case 'cancelled':
@@ -134,7 +172,7 @@ const AppointmentCase = (props) => {
 
   return (
     <>
-      <div style={calcStyle(service, estate)} onClick={handleShow}>
+      <div style={calcStyle(service, estate, madeBy)} onClick={handleShow}>
         { isMobile ?
             props.appointment.madeBy?.name.substring(0,1) +
             props.appointment.madeBy?.surname.substring(0,1) :
@@ -148,6 +186,7 @@ const AppointmentCase = (props) => {
         <Modal.Body>
           <p>{props.appointment.service}</p>
           <br/><small>creada: {moment(props.appointment.createdAt).fromNow()}</small>
+          <br/><small>xxx: {props.appointment.madeBy.signature ? "SI":"NO" }</small>
         </Modal.Body>
         <Modal.Footer>
           { props.appointment.estate === 'pending' ?
@@ -171,15 +210,33 @@ const AppointmentCase = (props) => {
                 </div>
 
                 <div>
-                  <Button
-                    variant="primary"
-                    aid={props.appointment.id}
-                    arrindx={props.index}
-                    indexdate={props.indexdate}
-                    onClick={(e) => {handleClose();props.fulfillAppointment(e)}}
-                  >
-                    Confirmar
-                  </Button>
+
+                  {
+
+                    props.appointment.madeBy.signature
+                      ? <Button
+                          variant="primary"
+                          aid={props.appointment.id}
+                          arrindx={props.index}
+                          indexdate={props.indexdate}
+                          onClick={(e) => {handleClose();props.fulfillAppointment(e)}}
+                        >
+                          Confirmar
+                        </Button>
+
+                      : <Link to={{
+                          pathname: '/patients/' + props.appointment.madeBy._id,
+                          state: {
+                            invoice: "1",
+                            xxx: "2",
+                          },
+                          myCustomProps: "3"
+                        }}>
+                          Cumplimentar PD
+                        </Link>
+
+                  }
+
                 </div>
 
               </div>

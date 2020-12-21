@@ -6,6 +6,7 @@ export default class AddService extends Component {
     super(props);
     this.onChangeIVA = this.onChangeIVA.bind(this);
     this.onChangeName = this.onChangeName.bind(this);
+    this.onChangeActivity = this.onChangeActivity.bind(this);
     this.createService = this.createService.bind(this);
     this.newService = this.newService.bind(this);
     this.onChangeCost = this.onChangeCost.bind(this);
@@ -15,6 +16,7 @@ export default class AddService extends Component {
       iva: 0,
       cost: 0,
       submitted: false,
+      activity: ""
     };
   }
 
@@ -36,11 +38,18 @@ export default class AddService extends Component {
     });
   }
 
+  onChangeActivity(e) {
+    this.setState({
+      activity: e.target.value,
+    });
+  }
+
   createService() {
     var data = {
       iva: this.state.iva,
       name: this.state.name,
-      cost: this.state.cost
+      cost: this.state.cost,
+      activity: this.state.activity
     };
 
     ServiceDataService.create(data)
@@ -48,7 +57,7 @@ export default class AddService extends Component {
         this.setState({
           submitted: true
         });
-        // console.log(response.data);
+        console.log(response.data);
       })
       .catch((e) => {
         console.log(e);
@@ -61,12 +70,14 @@ export default class AddService extends Component {
       iva: 0,
       cost: 0,
       submitted: false,
+      activity: "",
     });
   }
 
   render() {
     return (
       <div className="row">
+      dff
         <div className="col-12" style={{ marginTop: '10px'}}>
           <div className="submit-form">
             {this.state.submitted ? (
@@ -80,7 +91,7 @@ export default class AddService extends Component {
               <div>
 
                 <div className="form-group">
-                  <label htmlFor="title">Service</label>
+                  <label htmlFor="name">Servicio</label>
                   <input
                     type="text"
                     className="form-control"
@@ -89,6 +100,19 @@ export default class AddService extends Component {
                     value={this.state.name}
                     onChange={this.onChangeName}
                     name="name"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="activity">Actividad</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="activity"
+                    required
+                    value={this.state.activity}
+                    onChange={this.onChangeActivity}
+                    name="activity"
                   />
                 </div>
 

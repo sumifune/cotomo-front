@@ -260,6 +260,7 @@ export default class AddAppointment extends Component {
   }
 
   redirectPatients = (hour, day, selectedDate) => {
+
     // console.log('red ' + dh);
     // return <Redirect to={`/patients`}/>
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import InvoiceDataService from "../services/invoice.service";
+import InvoicePsicoDataService from "../services/invoice.psicologia.service";
 import ServiceDataService from "../services/service.service";
 import Form from 'react-bootstrap/Form';
 
@@ -25,7 +25,7 @@ export default class AddVoice extends Component {
   }
   retrieveServices() {
 
-    ServiceDataService.getAllActivity({ activity: "Acupuntura" })
+    ServiceDataService.getAllActivity({ activity: "Psicología" })
       .then((response) => {
         // console.log(response);
         const { data } = response.data;
@@ -42,7 +42,6 @@ export default class AddVoice extends Component {
             concept: data[0].id
           });
         }
-
       })
       .catch((e) => {
         console.log(e);
@@ -76,7 +75,7 @@ export default class AddVoice extends Component {
 
 
     console.log(data);
-    InvoiceDataService.create(data)
+    InvoicePsicoDataService.create(data)
       .then((response) => {
         this.setState({
           submitted: true,

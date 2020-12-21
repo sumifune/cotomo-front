@@ -4,6 +4,8 @@ import PatientDataService from "../services/patient.service";
 import SignaturePad from 'react-signature-canvas';
 import './add-patient.component.css';
 
+// import moment from
+
 export default class AddPatient extends Component {
   constructor(props) {
     super(props);
@@ -165,7 +167,7 @@ export default class AddPatient extends Component {
           <div>
 
             <div className="form-group">
-              <label htmlFor="title">Nombre</label>
+              <label htmlFor="name">Nombre</label>
               <input
                 type="text"
                 className="form-control"
@@ -269,6 +271,59 @@ export default class AddPatient extends Component {
                 onChange={this.onChangeDescription}
                 name="description"
               />
+            </div>
+
+
+            <div className='row'>
+              <div className="col text-center">
+              	En base a la presente clausula HASHIME OTOMO HIDALGO (CENTRO OTOMO) solicita su consentimiento a:
+              </div>
+            </div>
+
+            <div className='row'>
+              <div className="col">
+              	TUTOR: {this.state.tutor1}
+              </div>
+              <div className="col">
+              	NIF: {this.state.niftutor1}
+              </div>
+            </div>
+            <div className='row'>
+              <div className="col">
+              	TUTOR: {this.state.tutor2}
+              </div>
+              <div className="col">
+              	NIF: {this.state.niftutor2}
+              </div>
+            </div>
+            <div className='row'>
+              <div className="col">
+              	PACIENTE: {this.state.name} {this.state.surname}
+              </div>
+              <div className="col">
+              	NIF: {this.state.dni}
+              </div>
+            </div>
+
+            <div className='row'>
+            	<div className='col'>
+								Para el tratamient de sus datos personales según lo dispuesto en los artículos 6 y 9 del Reglamento (UE) 2016/679 informándole que el tratamiento de sus datos tiene su base en la prestación de servicios sanitarios (Centro Otomo)
+								En cumplimiento del artículo 13 del Reglamento Europeo de Protección de Datos, he sido informado/a de que mis datos personales pasarán a formar parte del sistema de tratamiento PACIENTES.
+								La finalidad del tratamiento es la “gestión de los datos de los pacientes y de su historia clínica y de las tareas administrativas derivadas de la prestación asistencial”
+								Sus datos podrán ser cedidos a entidades sanitarias por imperativo legal y la documentación clínica será conservada durante el tiempo necesario para prestar la debida asistencia al paciente y, como mínimo, cinco años contados desde la fecha del alta del proceso asistencial.
+								Podrá ejercitar los derechos de OPOSICIÓN, ACCESO, RECTIFICACIÓN, LIMITACIÓN DEL TRATAMIENTO, SUPRESIÓN Y PORTABILIDAD mediante escrito dirigido a HASHIME OTOMO HIDALGO (CENTRO OTOMO).RUA CASTELAO 13-15 BAJO 2 27001-LUGO acompañando fotocopia de DNI o en su defecto documento que acredite su debida identidad o bien con carácter previo a tal actuación solicitar con las mismas señas que le sean remitidos los impresos que el responsable del fichero dispone a tal efecto.
+            	</div>
+            </div>
+            <div className='row'>
+            	<div className='col'>
+            		En LUGO a 20 de septiembre de 2020
+            	</div>
+            </div>
+
+            <div className='row'>
+            	<div className='col'>
+            		Firmado Paciente/Padre/Madre/Tutor
+            	</div>
             </div>
 
             <div className="sigContainer">

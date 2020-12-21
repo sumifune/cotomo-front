@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import InvoiceDataService from "../services/invoice.service";
+import InvoicePsicoDataService from "../services/invoice.psicologia.service";
 import moment from "moment";
 import 'moment/locale/es';
 import Card from 'react-bootstrap/Card';
@@ -43,7 +43,7 @@ export default class InvoicesListByPatient extends Component {
   retrieveInvoices() {
     const { id } = this.state;
 
-    InvoiceDataService.findByPatientId(id)
+    InvoicePsicoDataService.findByPatientId(id)
       .then((response) => {
         // console.log(response);
         const { invoices } = response.data;
@@ -75,7 +75,7 @@ export default class InvoicesListByPatient extends Component {
       estate: "cancelled",
     };
 
-    InvoiceDataService.update(id, data)
+    InvoicePsicoDataService.update(id, data)
       .then((response) => {
 
         // console.log(response.data);
@@ -115,7 +115,7 @@ export default class InvoicesListByPatient extends Component {
       estate: "payed",
     };
 
-    InvoiceDataService.update(id, data)
+    InvoicePsicoDataService.update(id, data)
       .then((response) => {
 
         // console.log(response.data);

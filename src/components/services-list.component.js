@@ -55,6 +55,7 @@ export default class ServicesList extends Component {
                               <div className="row">
                                 <div className="col-12">
                                   <p>Servicio: {service.name}</p>
+                                  <p>Actividad: {service.activity}</p>
                                   <p>IVA: {service.iva}</p>
                                   <p>Coste: {service.cost}</p>
                                 </div>

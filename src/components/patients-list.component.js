@@ -8,7 +8,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Dropdown from 'react-bootstrap/Dropdown'
 import AppointmentDataService from "../services/appointment.service";
 import MediaQuery from 'react-responsive';
-import Image from 'react-bootstrap/Image';
+// import Image from 'react-bootstrap/Image';
 import moment from "moment";
 
 
@@ -269,8 +269,11 @@ export default class PatientsList extends Component {
                             <Dropdown.Item href={"/appointments/patient/" + patient.id}>Citas</Dropdown.Item>
                             <Dropdown.Item href={"/patients/" + patient.id + "/obs"}>Historia</Dropdown.Item>
                             <Dropdown.Divider />
-                            <Dropdown.Item href={"/addinvoice/" + patient.id}>Nueva factura</Dropdown.Item>
-                            <Dropdown.Item href={"/invoices/patient/" + patient.id}>Facturas</Dropdown.Item>
+                            <Dropdown.Item href={"/addinvoice/" + patient.id}>Nueva factura de acupuntura</Dropdown.Item>
+                            {/*<Dropdown.Item href={"/invoices/patient/" + patient.id}>Facturas de acupuntura</Dropdown.Item>*/}
+                            <Dropdown.Divider />
+                            <Dropdown.Item href={"/addinvoicepsico/" + patient.id}>Nueva factura de psicología</Dropdown.Item>
+                            {/*<Dropdown.Item href={"/invoicespsico/patient/" + patient.id}>Facturas de psicologia</Dropdown.Item>*/}
                             <Dropdown.Divider />
                             <Dropdown.Item href={"/patients/" + patient.id}>Editar</Dropdown.Item>
                           </Dropdown.Menu>
@@ -366,7 +369,7 @@ export default class PatientsList extends Component {
           </div>
         </div>
         <div className="col-12">
-          <Image src="https://github.com/sumifune/cotomo-front/workflows/Node.js%20CI/badge.svg" rounded />
+          {/*<Image src="https://github.com/sumifune/cotomo-front/workflows/Node.js%20CI/badge.svg" rounded />*/}
         </div>
       </div>
       </>

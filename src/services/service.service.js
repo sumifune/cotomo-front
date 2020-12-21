@@ -5,11 +5,16 @@ class ServiceDataService {
     return http.get("/services", { params });
   }
 
+  getAllActivity(params) {
+    return http.get("/services/area", { params });
+  }
+
   get(id) {
     return http.get(`/services/${id}`);
   }
 
   create(data) {
+    console.log(data);
     return http.post("/services", data);
   }
 

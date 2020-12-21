@@ -14,9 +14,23 @@ import AddAppointment from "./components/add-appointment.component";
 import AppointmentsListByPatient from "./components/appointments-list-by-patient.component";
 // dsfsdf
 import InvoicesList from "./components/invoices-list.component";
+import InvoicesListPsico from "./components/invoices-list-psico.component";
+
+
 import AddInvoice from "./components/add-invoice.component";
-import InvoicesListByPatient from "./components/invoices-list-by-patient.component";
+import AddInvoicePsico from "./components/add-invoice.psico.component";
+
+
+// import InvoicesListByPatient from "./components/invoices-list-by-patient.component";
+// import InvoicesListByPatientPsico from "./components/invoices-list-by-patient-psico.component";
+
 import InvoicePDF from "./components/invoice-pdf.component";
+import InvoicePDFMobile from "./components/invoice-pdf-mobile.component";
+
+import InvoicePDFPsico from "./components/invoice-pdf-psico.component";
+import InvoicePDFPsicoMobile from "./components/invoice-pdf-psico-mobile.component";
+
+
 // import InvoicePDF from "./components/invoice-pdf-functional.component";
 import ObservationsList from "./components/observations-list-by-patient.component";
 import AddObservation from "./components/add-observation.component";
@@ -44,7 +58,8 @@ class App extends Component {
                   <NavDropdown.Item href="/add">Nuevo</NavDropdown.Item>
                 </NavDropdown>
                 <NavDropdown alignRight title="Facturas" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="/invoices">Facturas</NavDropdown.Item>
+                  <NavDropdown.Item href="/invoices">Facturas Acupuntura</NavDropdown.Item>
+                  <NavDropdown.Item href="/invoicespsico">Facturas Psicología</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="/services">Servicios</NavDropdown.Item>
                   <NavDropdown.Item href="/addservice">Nuevo Servicio</NavDropdown.Item>
@@ -82,13 +97,25 @@ class App extends Component {
                 <Route exact path="/patients/:id" component={Patient} />
                 <Route exact path="/patients/:id/obs" component={ObservationsList} />
                 <Route path="/patients/:id/obs/new" component={AddObservation} />
+
+                <Route
+                  exact
+                  path={["/", "/invoicespsico"]}
+                  component={InvoicesListPsico}
+                />
+                <Route exact path="/addinvoicepsico/:id" component={AddInvoicePsico} />
+                {/*<Route path="/invoicespsico/patient/:id" component={InvoicesListByPatientPsico} />*/}
+                <Route exact path="/invoicespsicomobile/pdf/:id" component={InvoicePDFPsicoMobile} />
+                <Route exact path="/invoicespsico/pdf/:id" component={InvoicePDFPsico} />
+
                 <Route
                   exact
                   path={["/", "/invoices"]}
                   component={InvoicesList}
                 />
                 <Route exact path="/addinvoice/:id" component={AddInvoice} />
-                <Route path="/invoices/patient/:id" component={InvoicesListByPatient} />
+                {/*<Route path="/invoices/patient/:id" component={InvoicesListByPatient} />*/}
+                <Route path="/invoicesmobile/pdf/:id" component={InvoicePDFMobile} />
                 <Route path="/invoices/pdf/:id" component={InvoicePDF} />
 
                 <Route

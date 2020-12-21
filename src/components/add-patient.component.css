@@ -19,6 +19,10 @@
   background-color: #fff;
   border: 5px solid black;
 }
+.suplemtext {
+  width: 80%;
+  margin: 0 auto;
+}
 
 .sigPad {
   width: 100%;

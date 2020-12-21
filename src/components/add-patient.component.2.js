@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import PatientDataService from "../services/patient.service";
-import SignaturePad from 'react-signature-canvas';
+// import SignaturePad from 'react-signature-canvas';
 import './add-patient.component.css';
+
+import moment from "moment";
+import 'moment/locale/es';
+moment.locale("es");
 
 export default class AddPatient extends Component {
   constructor(props) {
@@ -30,20 +34,20 @@ export default class AddPatient extends Component {
       active: false,
 
       submitted: false,
-      trimmedDataURL: null,
+      // trimmedDataURL: null,
     };
-    this.sigPad = {};
+    // this.sigPad = {};
   }
-  clear = (e) => {
-    e.preventDefault();
-    this.sigPad.clear();
-    this.setState({trimmedDataURL: null});
-  }
-  trim = (e) => {
-    e.preventDefault();
-    this.setState({trimmedDataURL: this.sigPad.getTrimmedCanvas()
-      .toDataURL('image/png')});
-  }
+  // clear = (e) => {
+  //   e.preventDefault();
+  //   this.sigPad.clear();
+  //   this.setState({trimmedDataURL: null});
+  // }
+  // trim = (e) => {
+  //   e.preventDefault();
+  //   this.setState({trimmedDataURL: this.sigPad.getTrimmedCanvas()
+  //     .toDataURL('image/png')});
+  // }
   onChangeName(e) {
     this.setState({
       name: e.target.value,
@@ -89,21 +93,23 @@ export default class AddPatient extends Component {
   savePatient(e) {
     e.preventDefault();
     // console.log(this.state.trimmedDataURL);
-    if (!!!this.state.trimmedDataURL) {
-      console.log('trimmedDataURL not set');
+    // if (!!!this.state.trimmedDataURL) {
+    //   console.log('trimmedDataURL not set');
+    //   return;
+    // }
+    if (!!!this.state.name && !!!this.state.name && !!!this.state.name)
       return;
-    }
 
     var data = {
       name: this.state.name,
       surname: this.state.surname,
+      phone: this.state.phone,
       address: this.state.address,
       city: this.state.city,
       dni: this.state.dni,
-      phone: this.state.phone,
       email: this.state.email,
       description: this.state.description,
-      signature: this.state.trimmedDataURL
+      // signature: this.state.trimmedDataURL
     };
 
     PatientDataService.create(data)
@@ -138,7 +144,6 @@ export default class AddPatient extends Component {
 
   newPatient(e) {
     e.preventDefault();
-    console.log('HHHHHHHHHHHHHHHHHHHHHHHHHH');
     this.setState({
       id: null,
       name: "",
@@ -150,7 +155,7 @@ export default class AddPatient extends Component {
       email: "",
       description: "",
       active: false,
-      trimmedDataURL: null,
+      // trimmedDataURL: null,
 
       submitted: false,
     });
@@ -167,7 +172,6 @@ export default class AddPatient extends Component {
             <button className="btn btn-success" onClick={this.newPatient}>
               Nuevo
             </button>
-            -----     {this.state.submitted ? "true":"false"}    -------
           </div>
         ) : (
           <div>
@@ -181,6 +185,7 @@ export default class AddPatient extends Component {
                 value={this.state.name}
                 onChange={this.onChangeName}
                 name="name"
+                placeholder="Requerido"
               />
             </div>
 
@@ -194,47 +199,7 @@ export default class AddPatient extends Component {
                 value={this.state.surname}
                 onChange={this.onChangeSurname}
                 name="surname"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="address">Dirección</label>
-              <input
-                type="text"
-                className="form-control"
-                id="address"
-                required
-                value={this.state.address}
-                onChange={this.onChangeAddress}
-                name="address"
-                autoComplete="nope"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="city">Ciudad</label>
-              <input
-                type="text"
-                className="form-control"
-                id="city"
-                required
-                value={this.state.city}
-                onChange={this.onChangeCity}
-                name="city"
-                autoComplete="nope"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="dni">DNI</label>
-              <input
-                type="text"
-                className="form-control"
-                id="dni"
-                required
-                value={this.state.dni}
-                onChange={this.onChangeDni}
-                name="dni"
+                placeholder="Requerido"
               />
             </div>
 
@@ -248,8 +213,48 @@ export default class AddPatient extends Component {
                 value={this.state.phone}
                 onChange={this.onChangePhone}
                 name="phone"
+                placeholder="Requerido"
               />
             </div>
+
+            <div className="form-group">
+              <label htmlFor="address">Dirección</label>
+              <input
+                type="text"
+                className="form-control"
+                id="address"
+                value={this.state.address}
+                onChange={this.onChangeAddress}
+                name="address"
+                autoComplete="nope"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="city">Ciudad</label>
+              <input
+                type="text"
+                className="form-control"
+                id="city"
+                value={this.state.city}
+                onChange={this.onChangeCity}
+                name="city"
+                autoComplete="nope"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="dni">DNI</label>
+              <input
+                type="text"
+                className="form-control"
+                id="dni"
+                value={this.state.dni}
+                onChange={this.onChangeDni}
+                name="dni"
+              />
+            </div>
+
 
             <div className="form-group">
               <label htmlFor="email">Email</label>
@@ -257,7 +262,6 @@ export default class AddPatient extends Component {
                 type="text"
                 className="form-control"
                 id="email"
-                required
                 value={this.state.email}
                 onChange={this.onChangeEmail}
                 name="email"
@@ -271,39 +275,12 @@ export default class AddPatient extends Component {
                 type="text"
                 className="form-control"
                 id="description"
-                required
                 value={this.state.description}
                 onChange={this.onChangeDescription}
                 name="description"
               />
             </div>
 
-            <div className="sigContainer">
-              <SignaturePad
-                canvasProps={{className: 'sigPad'}}
-                ref={(ref) => { this.sigPad = ref }}
-              />
-            </div>
-            <div className='row buttons-margin'>
-              <div className="col">
-                <button className="buttons" onClick={this.clear}>
-                  Reset
-                </button>
-              </div>
-              <div className="col">
-                <button className="buttons" onClick={this.trim}>
-                  Capturar
-                </button>
-              </div>
-            </div>
-            <div className='row'>
-              <div className="col text-center">
-                {this.state.trimmedDataURL
-                  ? <img className="sigImage"
-                    src={this.state.trimmedDataURL} alt='manolito'/>
-                  : null}
-              </div>
-            </div>
             <div className='row'>
               <div className="col text-center">
                 <button style={{marginBottom: "25px", marginTop: "20px"}} onClick={this.savePatient} className="btn btn-secondary">

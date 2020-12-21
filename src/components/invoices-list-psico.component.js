@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import InvoiceDataService from "../services/invoice.service";
+import InvoicePsicoDataService from "../services/invoice.psicologia.service";
 // import { Link } from "react-router-dom";
 import Pagination from "@material-ui/lab/Pagination";
 import './invoices-list.component.css';
@@ -101,7 +101,7 @@ export default class InvoicesList extends Component {
     const { searchSurname, date1, date2, page, pageSize } = this.state;
     const params = this.getRequestParams(searchSurname, date1.format("DD-MM-YYYY"), date2.format("DD-MM-YYYY"), page, pageSize);
 
-    InvoiceDataService.generateExcel(params)
+    InvoicePsicoDataService.generateExcel(params)
       .then((response) => {
         const { estate } = response.data;
 
@@ -115,12 +115,12 @@ export default class InvoicesList extends Component {
   }
 
   descExcel() {
-    InvoiceDataService.downloadExcel()
+    InvoicePsicoDataService.downloadExcel()
       .then((response) => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'Acupuntura.xlsx');
+        link.setAttribute('download', 'Psicologia.xlsx');
         document.body.appendChild(link);
         link.click();
       })
@@ -134,11 +134,9 @@ export default class InvoicesList extends Component {
     const { searchSurname, date1, date2, page, pageSize } = this.state;
     const params = this.getRequestParams(searchSurname, date1.format("DD-MM-YYYY"), date2.format("DD-MM-YYYY"), page, pageSize);
 
-    InvoiceDataService.getAll(params)
+    InvoicePsicoDataService.getAll(params)
       .then((response) => {
         const { invoices, totalPages, totalInvoices, numberInvoices, numCanInvoices } = response.data;
-
-        console.log(invoices);
 
         this.setState({
           invoices: invoices,
@@ -237,7 +235,7 @@ export default class InvoicesList extends Component {
       estate: "cancelled",
     };
 
-    InvoiceDataService.update(id, data)
+    InvoicePsicoDataService.update(id, data)
       .then((response) => {
 
         // console.log(response.data);
@@ -265,6 +263,7 @@ export default class InvoicesList extends Component {
 
           let numCanInvoices = state.numCanInvoices;
           numCanInvoices = numCanInvoices + 1;
+
 
           let downloadExcel = false;
 
@@ -438,40 +437,21 @@ export default class InvoicesList extends Component {
                               <div className="col-6 col-sm-6">
                                 <span>Concepto</span>
                               </div>
-                              <div className="col-0 col-sm-1 d-none d-sm-block" style={{ paddingLeft: '0px',paddingRight: '0px'}}>
-                                <span>Ses</span>
+                              <div className="col-3 col-sm-3" style={{ paddingLeft: '0px',paddingRight: '0px'}}>
+                                <span>Sesiones</span>
                               </div>
-                              <div className="col-2 col-sm-2" style={{ paddingLeft: '0px',paddingRight: '0px'}}>
-                                Base
-                              </div>
-                              <div className="col-1 col-sm-1" style={{ paddingLeft: '0px',paddingRight: '0px'}}>
-                                <span>IVA</span>
-                              </div>
-                              <div className="col-3 col-sm-2">
+                              <div className="col-3 col-sm-3">
                                 <span>Total</span>
                               </div>
                             </div>
                             <div className="row">
                               <div className="col-6 col-sm-6">
-														    <MediaQuery maxWidth={576}>
-														      {/* You can also use a function (render prop) as a child */}
-														      {(matches) =>
-														        matches
-														          ? <span>{ invoice.sessions + "x " + invoice.concept }</span>
-														          : <span>{ invoice.concept }</span>
-														      }
-														    </MediaQuery>
+                                <span>{ invoice.concept }</span>
                               </div>
-                              <div className="col-0 col-sm-1 d-none d-sm-block" style={{ paddingLeft: '0px',paddingRight: '0px'}}>
+                              <div className="col-3 col-sm-3" style={{ paddingLeft: '0px',paddingRight: '0px'}}>
                                 <span>{invoice.sessions}</span>
                               </div>
-                              <div className="col-2 col-sm-2" style={{ paddingLeft: '0px',paddingRight: '0px'}}>
-                                <span>{invoice.base}</span>
-                              </div>
-                              <div className="col-1 col-sm-1" style={{ paddingLeft: '0px',paddingRight: '0px'}}>
-                                <span>{invoice.iva}</span>
-                              </div>
-                              <div className="col-3 col-sm-2">
+                              <div className="col-3 col-sm-3">
                                 <span>{invoice.total}</span>
                               </div>
                             </div>
@@ -479,15 +459,12 @@ export default class InvoicesList extends Component {
                             <div className="row">
                               <div className="col-6">
                                 {/* <small>creada {moment(invoice.createdAt).fromNow()}</small> */}
-
-
-
                                 <MediaQuery maxWidth={576}>
                                   {/* You can also use a function (render prop) as a child */}
                                   {(matches) =>
                                     matches
                                       ? <Link to={{
-                                          pathname: '/invoicesmobile/pdf/' + invoice.inumber,
+                                          pathname: '/invoicespsicomobile/pdf/' + invoice.inumber,
                                           state: {
                                             invoice: invoice,
                                             xxx: invoice.name,
@@ -497,7 +474,7 @@ export default class InvoicesList extends Component {
                                           Descargar PDF
                                         </Link>
                                       : <Link to={{
-                                          pathname: '/invoices/pdf/' + invoice.inumber,
+                                          pathname: '/invoicespsico/pdf/' + invoice.inumber,
                                           state: {
                                             invoice: invoice,
                                             xxx: invoice.name,
@@ -508,6 +485,7 @@ export default class InvoicesList extends Component {
                                         </Link>
                                   }
                                 </MediaQuery>
+
                               </div>
                               <div className="col-6 d-flex justify-content-end" style={{paddingTop: '3px'}}>
                                 <small>{invoice.emittedTo ? invoice.emittedTo._id : "ficha eliminada"}</small>
