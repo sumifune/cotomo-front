@@ -27,7 +27,7 @@ export default class AddService extends Component {
   getService(id) {
     ServiceDataService.get(id)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         this.setState({
           id: response.data.id,
           name: response.data.name,

@@ -138,7 +138,7 @@ export default class InvoicesList extends Component {
       .then((response) => {
         const { invoices, totalPages, totalInvoices, numberInvoices, numCanInvoices } = response.data;
 
-        console.log(invoices);
+        // console.log(invoices);
 
         this.setState({
           invoices: invoices,
@@ -179,7 +179,7 @@ export default class InvoicesList extends Component {
 
   handleKeyPress = (event) => {
     if(event.key === 'Enter'){
-      console.log('enter press here! ');
+      // console.log('enter press here! ');
       this.retrieveInvoices();
     }
   }

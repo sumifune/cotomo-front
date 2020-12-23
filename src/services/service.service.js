@@ -14,7 +14,6 @@ class ServiceDataService {
   }
 
   create(data) {
-    console.log(data);
     return http.post("/services", data);
   }
 

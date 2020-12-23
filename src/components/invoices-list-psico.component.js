@@ -177,7 +177,7 @@ export default class InvoicesList extends Component {
 
   handleKeyPress = (event) => {
     if(event.key === 'Enter'){
-      console.log('enter press here! ');
+      // console.log('enter press here! ');
       this.retrieveInvoices();
     }
   }

@@ -57,7 +57,7 @@ export default class AddService extends Component {
         this.setState({
           submitted: true
         });
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((e) => {
         console.log(e);
@@ -77,7 +77,6 @@ export default class AddService extends Component {
   render() {
     return (
       <div className="row">
-      dff
         <div className="col-12" style={{ marginTop: '10px'}}>
           <div className="submit-form">
             {this.state.submitted ? (

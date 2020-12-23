@@ -43,33 +43,119 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
+
+
+import AuthService from "./services/auth.service";
+
+import Login from "./components/login.component";
+import Register from "./components/register.component";
+import Home from "./components/home.component";
+import Profile from "./components/profile.component";
+import BoardUser from "./components/board-user.component";
+import BoardModerator from "./components/board-moderator.component";
+import BoardAdmin from "./components/board-admin.component";
+
+
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.logOut = this.logOut.bind(this);
+
+    this.state = {
+      showModeratorBoard: false,
+      showAdminBoard: false,
+      currentUser: undefined,
+    };
+  }
+
+  componentDidMount() {
+    const user = AuthService.getCurrentUser();
+
+    if (user) {
+      this.setState({
+        currentUser: user,
+        showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
+        showAdminBoard: user.roles.includes("ROLE_ADMIN"),
+      });
+    }
+  }
+
+  logOut() {
+    AuthService.logout();
+  }
+
   render() {
-    return <>
+
+    const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
+
+    return <React.Fragment>
           <Navbar bg="dark" variant="dark" fixed="top">
-            <Navbar.Brand href="/patients">Otomo</Navbar.Brand>
+            <Navbar.Brand href="/home">Otomo</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="mr-auto">
-                <Nav.Link href="/appointments">Citas</Nav.Link>
-                <NavDropdown alignRight title="Pacientes" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="/patients">Buscar</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="/add">Nuevo</NavDropdown.Item>
-                </NavDropdown>
-                <NavDropdown alignRight title="Facturas" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="/invoices">Facturas Acupuntura</NavDropdown.Item>
-                  <NavDropdown.Item href="/invoicespsico">Facturas Psicología</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="/services">Servicios</NavDropdown.Item>
-                  <NavDropdown.Item href="/addservice">Nuevo Servicio</NavDropdown.Item>
-                </NavDropdown>
+
+                {/*<Nav.Link href="/home">Home</Nav.Link>*/}
+
+                {/*{showModeratorBoard && ( <Nav.Link href="/mod">Moderator Board</Nav.Link> )}*/}
+                {/*{showAdminBoard && ( <Nav.Link href="/admin">Admin Board</Nav.Link> )}*/}
+                {/*{currentUser && ( <Nav.Link href="/user">User</Nav.Link> )}*/}
+
+								{showAdminBoard && ( <Nav.Link href="/appointments">Citas</Nav.Link> )}
+
+								{(showAdminBoard || showModeratorBoard) &&
+									(
+		                <NavDropdown alignRight title="Pacientes" id="basic-nav-dropdown">
+		                  <NavDropdown.Item href="/patients">Buscar</NavDropdown.Item>
+		                  <NavDropdown.Divider />
+		                  <NavDropdown.Item href="/add">Nuevo</NavDropdown.Item>
+		                </NavDropdown>
+                	)
+              	}
+
+								{showAdminBoard &&
+									(
+										<NavDropdown alignRight title="Facturas" id="basic-nav-dropdown">
+                  		<NavDropdown.Item href="/invoices">Facturas Acupuntura</NavDropdown.Item>
+                  		<NavDropdown.Item href="/invoicespsico">Facturas Psicología</NavDropdown.Item>
+                  		<NavDropdown.Divider />
+                  		<NavDropdown.Item href="/services">Servicios</NavDropdown.Item>
+                  		<NavDropdown.Item href="/addservice">Nuevo Servicio</NavDropdown.Item>
+                		</NavDropdown>
+                	)
+              	}
+
+                {currentUser ? (
+                  <React.Fragment>
+                      <Nav.Link href="/profile">{currentUser.username}</Nav.Link>
+                      {/*<a href="/login" className="nav-link" onClick={this.logOut}>
+                        LogOut
+                      </a>*/}
+                      <a href="/login" className="nav-link" onClick={this.logOut}>
+                        Salir
+                      </a>
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    <Nav.Link href="/login">Login</Nav.Link>
+                    <Nav.Link href="/register">Sign Up</Nav.Link>
+                  </React.Fragment>
+                )}
               </Nav>
             </Navbar.Collapse>
           </Navbar>
           <div className="container">
             <Router>
               <Switch>
+                <Route exact path={["/", "/home"]} component={Home} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/register" component={Register} />
+                <Route exact path="/profile" component={Profile} />
+                <Route path="/user" component={BoardUser} />
+                <Route path="/mod" component={BoardModerator} />
+                <Route path="/admin" component={BoardAdmin} />
+
                 <Route
                   exact
                   path={["/", "/appointments"]}
@@ -130,7 +216,7 @@ class App extends Component {
               </Switch>
             </Router>
           </div>
-        </>
+        </React.Fragment>
   }
 }
 

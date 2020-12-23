@@ -261,9 +261,9 @@ export default class Patient extends Component {
   getPatient(id) {
     PatientDataService.get(id)
       .then((response) => {
-        console.log(response.data);
-        console.log(moment().format());
-        console.log(moment(moment().format()).format('MMMM'));
+        // console.log(response.data);
+        // console.log(moment().format());
+        // console.log(moment(moment().format()).format('MMMM'));
 
         this.setState({
           currentPatient: {
@@ -324,7 +324,7 @@ export default class Patient extends Component {
       this.state.currentPatient
     )
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         this.setState({
           message: "Paciente actualizado correctamente!",
         });
