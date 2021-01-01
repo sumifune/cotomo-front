@@ -49,7 +49,7 @@ const AppointmentCase = (props) => {
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: '4px',
-      border: '2px solid red'
+      border: '2px solid blue'
     };
     const appointAF = {
       backgroundColor: '#bde400',
@@ -186,7 +186,7 @@ const AppointmentCase = (props) => {
         <Modal.Body>
           <p>{props.appointment.service}</p>
           <br/><small>creada: {moment(props.appointment.createdAt).fromNow()}</small>
-          <br/><small>xxx: {props.appointment.madeBy.signature ? "SI":"NO" }</small>
+          <br/><small>firma: {props.appointment.madeBy.signature ? "SI":"NO" }</small>
         </Modal.Body>
         <Modal.Footer>
           { props.appointment.estate === 'pending' ?

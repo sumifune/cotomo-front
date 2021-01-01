@@ -1,11 +1,14 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/api/auth/";
+// const API_URL = "http://localhost:3000/api/auth/";
 
-// const API_URL = process.env.NODE_ENV !== 'production' ?
-//                 process.env.REACT_APP_API_URL_DEVELOPMENT :
-//                 process.env.REACT_APP_API_URL_PRODUCTION;
+const API_URL = process.env.NODE_ENV !== 'production' ?
+                process.env.REACT_APP_API_URL_DEVELOPMENT :
+                process.env.REACT_APP_API_URL_PRODUCTION;
 
+
+// console.log(API_URL);
+// console.log(API_URL2);
 
 class AuthService {
   login(username, password) {

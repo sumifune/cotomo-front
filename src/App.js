@@ -9,7 +9,7 @@ import AddPatient from "./components/add-patient.component.2";
 import Patient from "./components/patient.component";
 import PatientsList from "./components/patients-list.component";
 import AppointmentsList from "./components/appointments-list.component";
-import AddAppointment from "./components/add-appointment.component";
+// import AddAppointment from "./components/add-appointment.component";
 // import Appointment from "./components/appointment.component";
 import AppointmentsListByPatient from "./components/appointments-list-by-patient.component";
 // dsfsdf
@@ -91,7 +91,7 @@ class App extends Component {
 
     return <React.Fragment>
           <Navbar bg="dark" variant="dark" fixed="top">
-            <Navbar.Brand href="/home">Otomo</Navbar.Brand>
+            <Navbar.Brand href="/home">O</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="mr-auto">
@@ -128,13 +128,17 @@ class App extends Component {
 
                 {currentUser ? (
                   <React.Fragment>
-                      <Nav.Link href="/profile">{currentUser.username}</Nav.Link>
+                    <NavDropdown alignRight title={currentUser.username.charAt(0).toUpperCase() + currentUser.username.slice(1)} id="basic-nav-dropdown">
+                      <NavDropdown.Item href="/profile">Perfil</NavDropdown.Item>
+                      <NavDropdown.Item href="/login" onClick={this.logOut}>Salir</NavDropdown.Item>
+                    </NavDropdown>
+                      {/*<Nav.Link href="/profile">{currentUser.username}</Nav.Link>*/}
                       {/*<a href="/login" className="nav-link" onClick={this.logOut}>
                         LogOut
                       </a>*/}
-                      <a href="/login" className="nav-link" onClick={this.logOut}>
+                      {/*<a href="/login" className="nav-link" onClick={this.logOut}>
                         Salir
-                      </a>
+                      </a>*/}
                   </React.Fragment>
                 ) : (
                   <React.Fragment>
@@ -166,7 +170,7 @@ class App extends Component {
                   path={["/", "/appointments/after/:selected"]}
                   component={AppointmentsList}
                 />
-                <Route exact path="/addappointment/:id" component={AddAppointment} />
+                {/*<Route exact path="/addappointment/:id" component={AddAppointment} />*/}
                 {/*<Route path="/appointments/:id" component={Appointment} />*/}
                 <Route path="/appointments/patient/:id" component={AppointmentsListByPatient} />
                 <Route

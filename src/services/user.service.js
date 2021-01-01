@@ -1,12 +1,14 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-const API_URL = 'http://localhost:3000/api/test/';
+// const API_URL = 'http://localhost:3000/api/test/';
 
-// const API_URL = process.env.NODE_ENV !== 'production' ?
-//                 process.env.REACT_APP_API_URL_TEST_DEVELOPMENT :
-//                 process.env.REACT_APP_API_URL_TEST_PRODUCTION;
+const API_URL = process.env.NODE_ENV !== 'production' ?
+                process.env.REACT_APP_API_URL_TEST_DEVELOPMENT :
+                process.env.REACT_APP_API_URL_TEST_PRODUCTION;
 
+// console.log(API_URL);
+// console.log(API_URL2);
 
 class UserService {
   getPublicContent() {

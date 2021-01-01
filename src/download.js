@@ -1,4 +1,5 @@
 import axios from "axios";
+import authHeader from './services/auth-header';
 
 const baseURL = process.env.NODE_ENV !== 'production' ?
 							  process.env.REACT_APP_BASE_URL_DEVELOPMENT :
@@ -6,9 +7,9 @@ const baseURL = process.env.NODE_ENV !== 'production' ?
 
 export default axios.create({
   baseURL: baseURL,
-  // headers: {
-  //   "Content-type": "application/json",
-  // },
+  headers: {
+    ...authHeader()
+  },
   responseType: 'blob',
 });
 

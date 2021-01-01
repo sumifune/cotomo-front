@@ -261,12 +261,12 @@ export default class PatientsList extends Component {
                         </Dropdown>
                         :
                         <Dropdown as={ButtonGroup}>
-                          <Button variant="secondary" href={"/addappointment/" + patient.id}>Citar</Button>
+                          <Button variant="secondary" href={"/appointments/patient/" + patient.id}>Citas</Button>
 
                           <Dropdown.Toggle split variant="secondary" id="dropdown-split-basic" />
 
                           <Dropdown.Menu>
-                            <Dropdown.Item href={"/appointments/patient/" + patient.id}>Citas</Dropdown.Item>
+                            {/*<Dropdown.Item href={"/appointments/patient/" + patient.id}>Citas</Dropdown.Item>*/}
                             <Dropdown.Item href={"/patients/" + patient.id + "/obs"}>Historia</Dropdown.Item>
                             <Dropdown.Divider />
                             <Dropdown.Item href={"/addinvoice/" + patient.id}>Nueva factura de acupuntura</Dropdown.Item>
